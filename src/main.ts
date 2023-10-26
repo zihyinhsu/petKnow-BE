@@ -17,7 +17,7 @@ async function bootstrap() {
 function setupSwagger(app: INestApplication) {
   const builder = new DocumentBuilder();
   const config = builder
-    .setTitle('petKnow')
+    .setTitle('petKnow 寵知')
     .setDescription('this is a basic Swagger document.')
     .setVersion('1.0')
     .build();
