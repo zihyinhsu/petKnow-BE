@@ -6,19 +6,36 @@ import {
   SwaggerCustomOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
-import { INestApplication } from '@nestjs/common';
+import {
+  // HttpStatus,
+  INestApplication,
+  // NotAcceptableException,
+  ValidationPipe,
+} from '@nestjs/common';
 
 async function bootstrap() {
   dotenv.config();
   const app = await NestFactory.create(AppModule);
   setupSwagger(app);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // 幫助濾掉非 dto 內定義的欄位,
+      // exceptionFactory: () => {
+      //   return new NotAcceptableException({
+      //     code: HttpStatus.NOT_ACCEPTABLE,
+      //     message: '格式錯誤', // 自訂錯誤訊息
+      //   });
+      // },
+    }),
+  );
   await app.listen(3000);
 }
+
 function setupSwagger(app: INestApplication) {
   const builder = new DocumentBuilder();
   const config = builder
     .setTitle('petKnow 寵知')
-    .setDescription('this is a basic Swagger document.')
+    .setDescription('This is a basic Swagger document.')
     .setVersion('1.0')
     .build();
 
