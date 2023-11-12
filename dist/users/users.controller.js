@@ -17,13 +17,14 @@ const auth_service_1 = require("./auth/auth.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const users_service_1 = require("./users.service");
 const common_1 = require("@nestjs/common");
+const mongodb_1 = require("mongodb");
 let UsersController = class UsersController {
     constructor(usersService, authService) {
         this.usersService = usersService;
         this.authService = authService;
     }
     async findUser(id) {
-        const user = await this.usersService.findOne(Number(id));
+        const user = await this.usersService.findOne(id);
         if (!user) {
             throw new common_1.NotFoundException('找不到該使用者資料');
         }
@@ -52,7 +53,7 @@ __decorate([
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [mongodb_1.ObjectId]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "findUser", null);
 __decorate([

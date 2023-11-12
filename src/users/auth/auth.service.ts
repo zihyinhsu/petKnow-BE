@@ -21,13 +21,11 @@ export class AuthService {
 
     // 記得先載 bcryptjs 套件
     const hashedPassword = String(bcrypt.hashSync(password, 12)); //密碼加密 10代表工作因子 通常，工作因子的值在 10 到 12 之间被认为是相对安全的，但您可以根据您的安全需求和性能需求来调整这个值。
-    const token = this.jwtService.sign({});
 
     const user = this.repo.create({
       email,
       name,
       password: hashedPassword,
-      token,
     });
 
     // 要先建立實例，entity listener 才會執行，如果沒建立實例，直接存物件

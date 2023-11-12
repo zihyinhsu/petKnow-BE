@@ -18,9 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
   async validate(payload) {
-    console.log('payload', payload);
     const { id } = payload;
-
     const user = await this.usersService.findOne(id);
     if (!user) {
       throw new UnauthorizedException('請先登入');

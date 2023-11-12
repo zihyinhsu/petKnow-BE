@@ -13,6 +13,7 @@ import {
   //   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor) // 使用內建攔截器
@@ -23,8 +24,8 @@ export class UsersController {
   ) {}
   // 取得單一使用者資料
   @Get('/:id')
-  async findUser(@Param('id') id: number) {
-    const user = await this.usersService.findOne(Number(id));
+  async findUser(@Param('id') id: ObjectId) {
+    const user = await this.usersService.findOne(id);
     if (!user) {
       throw new NotFoundException('找不到該使用者資料');
     }

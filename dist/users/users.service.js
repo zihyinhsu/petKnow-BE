@@ -17,20 +17,18 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./user.entity");
 const typeorm_2 = require("typeorm");
+const mongodb_1 = require("mongodb");
 let UsersService = class UsersService {
     constructor(repo) {
         this.repo = repo;
     }
     async findOne(query) {
-        console.log('type', typeof query, query);
         if (!query)
             return null;
         const user = await this.repo.findOne({
-            where: typeof query === 'string'
+            where: query.includes('@')
                 ? { email: query }
-                : typeof query === 'number'
-                    ? { id: query }
-                    : {},
+                : { _id: new mongodb_1.ObjectId(query) },
         });
         return user;
     }
