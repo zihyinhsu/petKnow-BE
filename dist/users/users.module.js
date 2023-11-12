@@ -10,13 +10,36 @@ exports.UsersModule = void 0;
 const common_1 = require("@nestjs/common");
 const users_controller_1 = require("./users.controller");
 const users_service_1 = require("./users.service");
+const user_entity_1 = require("./user.entity");
+const typeorm_1 = require("@nestjs/typeorm");
+const auth_service_1 = require("./auth/auth.service");
+const passport_1 = require("@nestjs/passport");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
+const jwt_strategy_1 = require("./auth/jwt.strategy");
 let UsersModule = class UsersModule {
 };
 exports.UsersModule = UsersModule;
 exports.UsersModule = UsersModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
+            jwt_1.JwtModule.registerAsync({
+                inject: [config_1.ConfigService],
+                useFactory: (config) => {
+                    return {
+                        secret: config.get('JWT_SECRETE'),
+                        signOptions: {
+                            expiresIn: config.get('JWT_EXPIRES'),
+                        },
+                    };
+                },
+            }),
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
+        ],
         controllers: [users_controller_1.UsersController],
-        providers: [users_service_1.UsersService],
+        providers: [users_service_1.UsersService, auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
+        exports: [jwt_strategy_1.JwtStrategy, passport_1.PassportModule],
     })
 ], UsersModule);
 //# sourceMappingURL=users.module.js.map
