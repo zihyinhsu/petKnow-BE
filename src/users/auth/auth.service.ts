@@ -1,5 +1,9 @@
 import { UsersService } from './../users.service';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  // UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -39,8 +43,12 @@ export class AuthService {
     let result = null;
     if (user) {
       result = user;
-      result.token = this.jwtService.sign({});
+      result.token = await this.jwtService.signAsync({
+        sub: user._id,
+        username: user.name,
+      });
     }
+
     return result;
   }
 
@@ -59,5 +67,27 @@ export class AuthService {
       return null;
     }
     return user;
+  }
+
+  // 驗證token
+  validateToken(token: string) {
+    let result;
+    try {
+      const decoded = this.jwtService.verify(token, {
+        secret: process.env.JWT_SECRETE,
+      });
+      console.log('token', decoded);
+      result = true;
+    } catch (error) {
+      if (error.name === 'TokenExpiredError') {
+        // 处理过期异常
+        console.log('Token has expired');
+      } else {
+        // 处理其他验证错误
+        console.log('Invalid token');
+      }
+      result = false;
+    }
+    return result;
   }
 }
