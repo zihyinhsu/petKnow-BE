@@ -3,16 +3,13 @@ import { UsersService } from './../users.service';
 // 而 passport strategy 則是 驗證機制，兩者缺一不可，整個 passport 生態系有上百種的驗證機制讓開發人員使用，
 // 如：facebook 驗證策略、google 驗證策略、本地驗證策略等，完美解決各種驗證機制的處理
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-// import { JwtService } from '@nestjs/jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, ExtractJwt } from 'passport-jwt'; // yarn add passport-jwt
+import { Strategy, ExtractJwt } from 'passport-jwt';
 
 // 用于处理 JSON Web Token (JWT) 的验证
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(
-    private usersService: UsersService, // private jwtService: JwtService,
-  ) {
+  constructor(private usersService: UsersService) {
     super({
       //这里调用了基类 super 的构造函数，并传递了一个配置对象。
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // jwtFromRequest 选项告诉 Passport 从请求的授权头中提取 JWT，这意味着 JWT 应该以 Bearer Token 的形式出现在请求头中。
@@ -20,12 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ignoreExpiration: false,
     });
   }
-  // 驗證token
+  // 驗證token後才會觸發此函式
   async validate(payload: any) {
+    console.log('payload', payload);
     const userId = payload.sub;
     const user = await this.usersService.findOne(userId);
     if (!user) {
-      throw new UnauthorizedException('請先登入');
+      throw new UnauthorizedException('沒有該使用者');
     }
     return user;
   }

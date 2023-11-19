@@ -68,26 +68,4 @@ export class AuthService {
     }
     return user;
   }
-
-  // 驗證token
-  validateToken(token: string) {
-    let result;
-    try {
-      const decoded = this.jwtService.verify(token, {
-        secret: process.env.JWT_SECRETE,
-      });
-      console.log('token', decoded);
-      result = true;
-    } catch (error) {
-      if (error.name === 'TokenExpiredError') {
-        // 处理过期异常
-        console.log('Token has expired');
-      } else {
-        // 处理其他验证错误
-        console.log('Invalid token');
-      }
-      result = false;
-    }
-    return result;
-  }
 }
