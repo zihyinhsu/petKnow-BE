@@ -11,19 +11,19 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
-import { ObjectId } from 'mongodb';
 import { Courses } from './dto/courses.entity';
 import { courseDto } from './dto/course.dto';
 import { AuthGuard } from '@nestjs/passport';
-// import { userDto } from 'src/users/dto/user.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('課程')
 @Controller('courses')
 export class CoursesController {
   constructor(private courseService: CoursesService) {}
 
   // 取得單一課程資料
   @Get('/:id')
-  async find(@Param('id') id: ObjectId) {
+  async find(@Param('id') id: string) {
     const course = await this.courseService.findOne(id);
     if (!course) {
       throw new NotFoundException('找不到該資料');
@@ -60,12 +60,12 @@ export class CoursesController {
   }
   // 更新單筆課程
   @Patch('/:id')
-  update(@Param('id') id: ObjectId, @Body() body: courseDto) {
+  update(@Param('id') id: string, @Body() body: courseDto) {
     return this.courseService.update(id, body);
   }
   // 刪除單筆課程
   @Delete('/:id')
-  remove(@Param('id') id: ObjectId) {
+  remove(@Param('id') id: string) {
     return this.courseService.remove(id);
   }
 }

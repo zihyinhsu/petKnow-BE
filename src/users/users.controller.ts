@@ -1,6 +1,6 @@
-// import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth/auth.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { userDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 import {
   Body,
@@ -10,11 +10,11 @@ import {
   NotFoundException,
   Param,
   Post,
-  //   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ObjectId } from 'mongodb';
+import { LoginUserDto } from './dto/login-user.dto';
 
+@ApiTags('註冊 & 登入')
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor) // 使用內建攔截器
 export class UsersController {
@@ -24,7 +24,7 @@ export class UsersController {
   ) {}
   // 取得單一使用者資料
   @Get('/:id')
-  async findUser(@Param('id') id: ObjectId) {
+  async findUser(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);
     if (!user) {
       throw new NotFoundException('找不到該使用者資料');
@@ -33,14 +33,13 @@ export class UsersController {
   }
   // 註冊
   @Post('/signup')
-  signUp(@Body() body: CreateUserDto) {
+  signUp(@Body() body: userDto) {
     return this.authService.signup(body);
   }
 
   // 登入
-  //   @UseGuards(AuthGuard())
   @Post('/login')
-  async login(@Body() body: CreateUserDto) {
+  async login(@Body() body: LoginUserDto) {
     const user = await this.authService.login(body);
     let message = '登入失敗';
     let statusCode = 404;
@@ -54,9 +53,4 @@ export class UsersController {
       user,
     };
   }
-
-  // 登出
-  //   @Post('/signout')
-  //   signOut() {
-  //   }
 }

@@ -51,7 +51,7 @@ export class CoursesService {
     return { data, total };
   }
   // 簡單說Partial 幫你複製了一份 Type ，然後把裡頭的 property 設為 optional ，也就是可有可無
-  async update(id: ObjectId, attrs: Partial<Courses>): Promise<Courses> {
+  async update(id, attrs: Partial<Courses>): Promise<Courses> {
     const course = await this.repo.findOneBy({
       _id: new ObjectId(id),
     });
@@ -62,7 +62,7 @@ export class CoursesService {
     const updateResult = await this.repo.save({ ...course, ...attrs });
     return updateResult;
   }
-  async remove(id: ObjectId): Promise<Courses> {
+  async remove(id): Promise<Courses> {
     const course = await this.repo.findOneBy({
       _id: new ObjectId(id),
     });

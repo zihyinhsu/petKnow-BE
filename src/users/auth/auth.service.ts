@@ -1,15 +1,12 @@
 import { UsersService } from './../users.service';
-import {
-  BadRequestException,
-  Injectable,
-  // UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { userDto } from '../dto/user.dto';
+import { LoginUserDto } from '../dto/login-user.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -18,7 +15,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   // 註冊
-  async signup(createUserData: CreateUserDto): Promise<User> {
+  async signup(createUserData: userDto): Promise<User> {
     const { email, password, name } = createUserData;
     const ExitUser = await this.validateUser(createUserData);
     if (ExitUser) throw new BadRequestException('此 email 已被使用');
@@ -38,8 +35,8 @@ export class AuthService {
   }
 
   // 登入
-  async login(userDto: CreateUserDto): Promise<User> {
-    const user = await this.validateUser(userDto);
+  async login(userData: LoginUserDto): Promise<User> {
+    const user = await this.validateUser(userData);
     let result = null;
     if (user) {
       result = user;
@@ -53,8 +50,8 @@ export class AuthService {
   }
 
   // 驗證是否有該使用者
-  async validateUser(createUserData: CreateUserDto): Promise<User> {
-    const { email, password } = createUserData;
+  async validateUser(userData: LoginUserDto): Promise<User> {
+    const { email, password } = userData;
     // 是否有此帳號
     const user = await this.usersService.findOne(email);
     if (!user) {
