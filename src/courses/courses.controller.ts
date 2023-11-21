@@ -6,9 +6,9 @@ import {
   Param,
   Post,
   Patch,
-  Query,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { Courses } from './dto/courses.entity';
@@ -33,7 +33,16 @@ export class CoursesController {
 
   // 搜尋所有課程
   @Get()
-  async search(@Query() query): Promise<Courses[]> {
+  async search(
+    @Query('filter') filter: string,
+    @Query('rowsPerPage') rowsPerPage: string,
+    @Query('page') page: string,
+  ): Promise<Courses[]> {
+    const query = {
+      filter,
+      rowsPerPage,
+      page,
+    };
     return this.courseService.find(query);
   }
 
