@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 import {
@@ -11,6 +11,7 @@ import {
   HttpStatus,
   NotAcceptableException,
   ValidationPipe,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 
 async function bootstrap() {
@@ -29,6 +30,7 @@ async function bootstrap() {
       },
     }),
   );
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector))); //全域攔截器，攔截掉敏感資料()
   await app.listen(3000);
 }
 

@@ -4,7 +4,6 @@ import { userDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Get,
   Patch,
@@ -21,7 +20,6 @@ import { User } from './user.entity';
 
 @ApiTags('註冊 & 登入')
 @Controller('auth')
-@UseInterceptors(ClassSerializerInterceptor) // 使用內建攔截器
 @UseInterceptors(new ResponseInterceptor(User)) // response 攔截器
 export class UsersController {
   constructor(
