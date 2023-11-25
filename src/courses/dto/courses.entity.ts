@@ -36,4 +36,7 @@ export class Courses {
 
   @Column()
   isFree: boolean;
+
+  @Column()
+  ownerId: string;
 }

@@ -9,8 +9,9 @@ import { ObjectId } from 'mongodb';
 export class CoursesService {
   constructor(@InjectRepository(Courses) private repo: Repository<Courses>) {}
 
-  create(createCourseDto: courseDto): Promise<Courses[]> {
+  create(createCourseDto: courseDto, currentUser): Promise<Courses[]> {
     const data = Object.assign(createCourseDto);
+    data.ownerId = new ObjectId(currentUser._id);
     const course = this.repo.create(data);
     // 要先建立實例，entity listener 才會執行，如果沒建立實例，直接存物件
     // 如：this.repo.save（{email,password,}） 就不會觸發 entity listener
@@ -30,7 +31,7 @@ export class CoursesService {
   // 取得符合條件的資料列表
   async find(query): Promise<any> {
     // 分頁
-    const resPerPage = Number(query.resPerPage) || 0; // 一頁有幾筆資料
+    const resPerPage = Number(query.rowsPerPage) || 0; // 一頁有幾筆資料
     const currentPage = Number(query.page) || 1;
     const skip = resPerPage * (currentPage - 1);
 
@@ -44,23 +45,57 @@ export class CoursesService {
       : {};
 
     const [data, total] = await this.repo.findAndCount({
-      where: keyword as FindOptionsWhere<Courses>[],
+      where: keyword as FindOptionsWhere<Courses>,
       skip: skip,
       take: resPerPage,
     });
     return { data, total };
   }
-  // 簡單說Partial 幫你複製了一份 Type ，然後把裡頭的 property 設為 optional ，也就是可有可無
-  async update(id, attrs: Partial<Courses>): Promise<Courses> {
+
+  // 我開的課
+  async findCreatedCourses(query): Promise<any> {
+    // 分頁
+    const resPerPage = Number(query.rowsPerPage) || 0; // 一頁有幾筆資料
+    const currentPage = Number(query.page) || 1;
+    const skip = resPerPage * (currentPage - 1);
+
+    const keyword = query.filter
+      ? {
+          $and: [
+            {
+              title: {
+                $regex: query.filter,
+                $options: 'i',
+              },
+            },
+            {
+              ownerId: new ObjectId(query.ownerId), // 假设 ownerId 是从查询参数中获取的
+            },
+          ],
+        }
+      : {
+          ownerId: new ObjectId(query.ownerId), // 假设 ownerId 是从查询参数中获取的
+        };
+
+    const [data, total] = await this.repo.findAndCount({
+      where: keyword as FindOptionsWhere<Courses>,
+      skip: skip,
+      take: resPerPage,
+    });
+    return { data, total };
+  }
+
+  async update(id, attrs) {
     const course = await this.repo.findOneBy({
       _id: new ObjectId(id),
     });
     if (!course) {
       throw new NotFoundException('找不到該課程');
     }
+    const updateResult = await this.repo.create({ ...course, ...attrs });
+    const result = await this.repo.save(updateResult);
 
-    const updateResult = await this.repo.save({ ...course, ...attrs });
-    return updateResult;
+    return result;
   }
   async remove(id): Promise<Courses> {
     const course = await this.repo.findOneBy({
