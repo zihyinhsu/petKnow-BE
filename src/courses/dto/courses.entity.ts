@@ -38,5 +38,8 @@ export class Courses {
   isFree: boolean;
 
   @Column()
-  ownerId: string;
+  @Transform((ownerId: any) => ownerId.value.toHexString(), {
+    toPlainOnly: true,
+  }) // 只在轉換為普通對象時顯示
+  ownerId: ObjectId;
 }
