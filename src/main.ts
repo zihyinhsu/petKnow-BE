@@ -7,8 +7,8 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import {
-  HttpStatus,
   INestApplication,
+  HttpStatus,
   NotAcceptableException,
   ValidationPipe,
 } from '@nestjs/common';
@@ -22,8 +22,9 @@ async function bootstrap() {
       whitelist: true, // 幫助濾掉非 dto 內定義的欄位,
       exceptionFactory: () => {
         return new NotAcceptableException({
-          code: HttpStatus.NOT_ACCEPTABLE,
-          message: '格式錯誤', // 自訂錯誤訊息
+          status: HttpStatus.BAD_REQUEST,
+          isSuccess: false,
+          message: '錯誤的請求', // 自訂錯誤訊息
         });
       },
     }),

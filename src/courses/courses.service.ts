@@ -44,12 +44,12 @@ export class CoursesService {
         }
       : {};
 
-    const [data, total] = await this.repo.findAndCount({
+    const [rows, rowsNumber] = await this.repo.findAndCount({
       where: keyword as FindOptionsWhere<Courses>,
       skip: skip,
       take: resPerPage,
     });
-    return { data, total };
+    return { rows, rowsNumber };
   }
 
   // 我開的課
@@ -77,12 +77,12 @@ export class CoursesService {
           ownerId: new ObjectId(query.ownerId), // 假设 ownerId 是从查询参数中获取的
         };
 
-    const [data, total] = await this.repo.findAndCount({
+    const [rows, rowsNumber] = await this.repo.findAndCount({
       where: keyword as FindOptionsWhere<Courses>,
       skip: skip,
       take: resPerPage,
     });
-    return { data, total };
+    return { rows, rowsNumber };
   }
 
   async update(id, attrs) {

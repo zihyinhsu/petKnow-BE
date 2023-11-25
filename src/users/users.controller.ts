@@ -8,8 +8,6 @@ import {
   Controller,
   Get,
   Patch,
-  // NotFoundException,
-  // Param,
   Post,
   Req,
   UseGuards,
@@ -18,25 +16,18 @@ import {
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { updateUserDto } from './dto/update-user.dto';
+import { ResponseInterceptor } from 'src/interceptors/response/response.interceptor';
+import { User } from './user.entity';
 
 @ApiTags('註冊 & 登入')
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor) // 使用內建攔截器
+@UseInterceptors(new ResponseInterceptor(User)) // response 攔截器
 export class UsersController {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
   ) {}
-
-  // 取得單一使用者資料
-  // @Get('/:id')
-  // async findUser(@Param('id') id: string) {
-  //   const user = await this.usersService.findOne(id);
-  //   if (!user) {
-  //     throw new NotFoundException('找不到該使用者資料');
-  //   }
-  //   return user;
-  // }
 
   // 取得當前使用者資料
   @ApiOperation({ summary: '取得當前使用者資料' })
@@ -65,17 +56,6 @@ export class UsersController {
   @ApiOperation({ summary: '登入' })
   @Post('/login')
   async login(@Body() body: LoginUserDto) {
-    const user = await this.authService.login(body);
-    let message = '登入失敗';
-    let statusCode = 404;
-    if (user) {
-      message = '登入成功';
-      statusCode = 200;
-    }
-    return {
-      status: statusCode,
-      message,
-      user,
-    };
+    return this.authService.login(body);
   }
 }
