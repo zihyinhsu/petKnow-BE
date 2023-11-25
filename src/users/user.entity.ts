@@ -21,11 +21,11 @@ export class User {
   email: string;
 
   @Column()
+  introduction: string;
+
+  @Column()
   @Exclude()
   password: string;
-
-  // @Column()
-  // token?: string;
 
   // Entity Listener
   // 簡單來說就是Entity有讀取、新增、修改、刪除的動作之前或之後可以做一些事情

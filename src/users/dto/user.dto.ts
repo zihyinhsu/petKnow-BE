@@ -1,8 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -16,6 +17,12 @@ export class userDto {
   @MaxLength(20)
   @Expose()
   name: string;
+
+  @ApiPropertyOptional()
+  @IsString()
+  @IsOptional()
+  @Expose()
+  introduction: string;
 
   @ApiProperty()
   @IsEmail()

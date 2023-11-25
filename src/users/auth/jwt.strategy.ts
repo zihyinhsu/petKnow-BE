@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
   // 驗證token後才會觸發此函式
   async validate(payload: any) {
-    console.log('payload', payload);
+    console.log('validateToken');
     const userId = payload.sub;
     const user = await this.usersService.findOne(userId);
     if (!user) {

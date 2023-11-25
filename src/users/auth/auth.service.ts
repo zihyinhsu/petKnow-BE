@@ -14,6 +14,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
+
   // 註冊
   async signup(createUserData: userDto): Promise<User> {
     const { email, password, name } = createUserData;
@@ -54,6 +55,7 @@ export class AuthService {
     const { email, password } = userData;
     // 是否有此帳號
     const user = await this.usersService.findOne(email);
+
     if (!user) {
       return null;
     }
@@ -63,6 +65,7 @@ export class AuthService {
     if (!pass) {
       return null;
     }
+
     return user;
   }
 }
