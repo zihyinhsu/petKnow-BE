@@ -10,17 +10,13 @@ import {
   Post,
   Req,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { updateUserDto } from './dto/update-user.dto';
-import { ResponseInterceptor } from 'src/interceptors/response/response.interceptor';
-import { User } from './user.entity';
 
 @ApiTags('註冊 & 登入')
 @Controller('auth')
-@UseInterceptors(new ResponseInterceptor(User)) // response 攔截器
 export class UsersController {
   constructor(
     private usersService: UsersService,

@@ -13,6 +13,7 @@ import {
   ValidationPipe,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
+import { ResponseInterceptor } from './interceptors/response/response.interceptor';
 
 async function bootstrap() {
   dotenv.config();
@@ -30,7 +31,8 @@ async function bootstrap() {
       },
     }),
   );
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector))); //全域攔截器，攔截掉敏感資料()
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector))); //全域攔截器，攔截掉敏感資料
+  app.useGlobalInterceptors(new ResponseInterceptor()); //全域攔截器，制定統一的 response
   await app.listen(3000);
 }
 

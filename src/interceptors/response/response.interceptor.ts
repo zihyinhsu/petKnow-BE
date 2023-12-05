@@ -9,7 +9,6 @@ import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
-  constructor(private dto: any) {}
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest();
@@ -21,7 +20,13 @@ export class ResponseInterceptor implements NestInterceptor {
       map((data: any) => {
         let message;
         let isSuccess = false;
-        if (status === HttpStatus.OK) {
+        if (originalUrl.includes('login')) {
+          if (data.token) message = '登入成功';
+          else {
+            message = '登入失敗';
+            data = undefined;
+          }
+        } else if (status === HttpStatus.OK) {
           if (method.toUpperCase() === 'PATCH') {
             message = '修改成功';
           } else if (method.toUpperCase() === 'DELETE') {
@@ -29,9 +34,7 @@ export class ResponseInterceptor implements NestInterceptor {
           }
           isSuccess = true;
         } else if (status === HttpStatus.CREATED) {
-          if (originalUrl.includes('login')) {
-            message = '登入成功';
-          } else message = '新增成功';
+          message = '新增成功';
           isSuccess = true;
         } else if (status === HttpStatus.NOT_ACCEPTABLE) {
           message = '錯誤的請求';
@@ -42,7 +45,10 @@ export class ResponseInterceptor implements NestInterceptor {
           status,
           isSuccess,
           message,
-          data,
+          data:
+            method.toUpperCase() === 'GET' || originalUrl.includes('login')
+              ? data
+              : undefined,
         };
       }),
     );
