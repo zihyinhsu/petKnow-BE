@@ -14,23 +14,65 @@ import { CoursesService } from './courses.service';
 import { Courses } from './dto/courses.entity';
 import { courseDto } from './dto/course.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('課程')
+@ApiCreatedResponse({ description: '新增成功' })
+@ApiOkResponse({
+  description: '成功',
+  schema: {
+    example: {
+      statusCode: 200,
+      isSuccess: true,
+      message: '成功',
+    },
+    properties: {
+      statusCode: { type: 'number' },
+      isSuccess: { type: 'boolean' },
+      message: { type: 'string' },
+    },
+  },
+})
+@ApiBadRequestResponse({
+  description: '錯誤的請求',
+  schema: {
+    example: {
+      statusCode: 400,
+      isSuccess: false,
+      message: '錯誤的請求',
+    },
+    properties: {
+      statusCode: { type: 'number' },
+      isSuccess: { type: 'boolean' },
+      message: { type: 'string' },
+    },
+  },
+})
+@ApiInternalServerErrorResponse({
+  description: '伺服器發生錯誤',
+  schema: {
+    example: {
+      statusCode: 500,
+      isSuccess: false,
+      message: '系統發生錯誤，請聯繫系統管理員',
+    },
+    properties: {
+      statusCode: { type: 'number' },
+      isSuccess: { type: 'boolean' },
+      message: { type: 'string' },
+    },
+  },
+})
 @Controller('courses')
 export class CoursesController {
   constructor(private courseService: CoursesService) {}
-
-  // 取得單筆程資料
-  // @ApiOperation({ summary: '取得單筆課程資料' })
-  // @Get('/:id')
-  // async find(@Param('id') id: string) {
-  //   const course = await this.courseService.findOne(id);
-  //   if (!course) {
-  //     throw new NotFoundException('找不到該資料');
-  //   }
-  //   return course;
-  // }
 
   // 搜尋所有課程
   @ApiOperation({ summary: '搜尋所有課程' })
@@ -74,18 +116,7 @@ export class CoursesController {
     courseData: courseDto,
     @Req() req,
   ) {
-    const course = await this.courseService.create(courseData, req.user);
-    let message = '新增失敗';
-    let statusCode = 404;
-    if (course) {
-      message = '新增成功';
-      statusCode = 200;
-    }
-    return {
-      status: statusCode,
-      message,
-      data: course,
-    };
+    return this.courseService.create(courseData, req.user);
   }
   // 更新單筆課程
   @ApiOperation({ summary: '更新單筆課程' })
