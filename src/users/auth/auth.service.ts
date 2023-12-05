@@ -36,18 +36,16 @@ export class AuthService {
   }
 
   // 登入
-  async login(userData: LoginUserDto): Promise<User> {
+  async login(userData: LoginUserDto): Promise<object> {
     const user = await this.validateUser(userData);
-    let result = null;
+    let token;
     if (user) {
-      result = user;
-      result.token = await this.jwtService.signAsync({
+      token = await this.jwtService.signAsync({
         sub: user._id,
         username: user.name,
       });
     }
-
-    return result;
+    return { token };
   }
 
   // 驗證是否有該使用者
