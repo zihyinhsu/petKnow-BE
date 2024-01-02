@@ -21,8 +21,10 @@ export class ResponseInterceptor implements NestInterceptor {
         let message;
         let isSuccess = false;
         if (originalUrl.includes('login')) {
-          if (data.token) message = '登入成功';
-          else {
+          if (data.token) {
+            message = '登入成功';
+            isSuccess = true;
+          } else {
             message = '登入失敗';
             data = undefined;
           }
