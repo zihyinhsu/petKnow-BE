@@ -10,7 +10,9 @@ import {
 } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+@ApiTags('購物車')
 @Controller('cart')
 export class CartController {
   constructor(private cartService: CartService) {}
