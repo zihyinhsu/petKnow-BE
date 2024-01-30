@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { Courses } from './dto/courses.entity';
-import { courseDto } from './dto/course.dto';
+import { courseDto } from './dto/courses.dto';
 import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBadRequestResponse,

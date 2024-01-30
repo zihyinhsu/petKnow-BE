@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CoursesModule } from './courses/courses.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { CoursesModule } from './courses/courses.module';
       autoLoadEntities: true,
     }),
     CoursesModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClassSerializerInterceptor],

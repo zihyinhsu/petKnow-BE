@@ -9,7 +9,6 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { User } from 'src/users/user.entity';
 
 export class courseDto {
   @ApiProperty({
@@ -70,7 +69,4 @@ export class courseDto {
   @IsBoolean()
   @IsOptional()
   isFree: boolean;
-
-  @IsOptional()
-  user: User;
 }

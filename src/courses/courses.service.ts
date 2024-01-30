@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Courses } from './dto/courses.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
-import { courseDto } from './dto/course.dto';
+import { courseDto } from './dto/courses.dto';
 import { ObjectId } from 'mongodb';
 
 @Injectable()
