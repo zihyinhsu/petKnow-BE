@@ -1,32 +1,19 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AuthService } from './auth/auth.service';
-import { userDto } from './dto/user.dto';
 import { UsersService } from './users.service';
-import {
-  Body,
-  Controller,
-  Get,
-  Patch,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
-import { LoginUserDto } from './dto/login-user.dto';
+import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { updateUserDto } from './dto/update-user.dto';
+import { RoleGuard } from './auth/role.guard';
 
-@ApiTags('註冊 & 登入')
-@Controller('auth')
+@ApiTags('使用者資料')
+@Controller('user')
+@UseGuards(AuthGuard('jwt'), RoleGuard)
 export class UsersController {
-  constructor(
-    private usersService: UsersService,
-    private authService: AuthService,
-  ) {}
+  constructor(private usersService: UsersService) {}
 
   // 取得當前使用者資料
   @ApiOperation({ summary: '取得當前使用者資料' })
   @Get('/personal')
-  @UseGuards(AuthGuard('jwt')) //代表此 API 需要有權限才能打
   async findCurrentUser(@Req() req) {
     return req.user;
   }
@@ -34,22 +21,7 @@ export class UsersController {
   // 編輯當前使用者資料
   @ApiOperation({ summary: '編輯當前使用者資料' })
   @Patch('/personal')
-  @UseGuards(AuthGuard('jwt')) //代表此 API 需要有權限才能打
   async editCurrentUser(@Body() body: updateUserDto, @Req() req) {
     return this.usersService.update(req.user._id, body);
-  }
-
-  // 註冊
-  @ApiOperation({ summary: '註冊' })
-  @Post('/signup')
-  signUp(@Body() body: userDto) {
-    return this.authService.signup(body);
-  }
-
-  // 登入
-  @ApiOperation({ summary: '登入' })
-  @Post('/login')
-  async login(@Body() body: LoginUserDto) {
-    return this.authService.login(body);
   }
 }

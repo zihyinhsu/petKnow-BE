@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CoursesModule } from './courses/courses.module';
 import { CartModule } from './cart/cart.module';
+import { AuthModule } from './users/auth/auth.module';
+import { join } from 'path';
+import { RoleGuard } from './users/auth/role.guard';
 
 @Module({
   imports: [
@@ -25,8 +28,13 @@ import { CartModule } from './cart/cart.module';
     }),
     CoursesModule,
     CartModule,
+    AuthModule.register({
+      global: true,
+      modelPath: join(__dirname, '../casbin/model.conf'),
+      policyAdapter: join(__dirname, '../casbin/policy.csv'),
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService, ClassSerializerInterceptor],
+  providers: [AppService, ClassSerializerInterceptor, RoleGuard],
 })
 export class AppModule {}

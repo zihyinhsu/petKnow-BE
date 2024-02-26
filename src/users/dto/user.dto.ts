@@ -2,12 +2,14 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { Role } from '../auth/rbac';
 
 export class userDto {
   @ApiProperty()
@@ -34,4 +36,10 @@ export class userDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  @ApiProperty()
+  @IsEnum(Role)
+  @Expose()
+  @IsOptional()
+  role: Role;
 }
