@@ -22,6 +22,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { RoleGuard } from 'src/users/auth/role.guard';
 
 @ApiTags('課程')
 @ApiCreatedResponse({ description: '新增成功' })
@@ -92,7 +93,7 @@ export class CoursesController {
   // 搜尋我開的課
   @ApiOperation({ summary: '我開的課' })
   @Get('/personal')
-  @UseGuards(AuthGuard('jwt')) //代表此 API 需要有權限才能打
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   async findCreatedCourses(
     @Query('filter') filter: string,
     @Query('rowsPerPage') rowsPerPage: string,
@@ -110,7 +111,7 @@ export class CoursesController {
   // 新增單筆課程
   @ApiOperation({ summary: '新增單筆課程' })
   @Post()
-  @UseGuards(AuthGuard('jwt')) //代表此 API 需要有權限才能打
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   async create(
     @Body()
     courseData: courseDto,
@@ -121,14 +122,14 @@ export class CoursesController {
   // 更新單筆課程
   @ApiOperation({ summary: '更新單筆課程' })
   @Patch('/:id')
-  @UseGuards(AuthGuard('jwt')) //代表此 API 需要有權限才能打
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   update(@Param('id') id: string, @Body() body: courseDto) {
     return this.courseService.update(id, body);
   }
   // 刪除單筆課程
   @ApiOperation({ summary: '刪除單筆課程' })
   @Delete('/:id')
-  @UseGuards(AuthGuard('jwt')) //代表此 API 需要有權限才能打
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   remove(@Param('id') id: string) {
     return this.courseService.remove(id);
   }
