@@ -1,4 +1,6 @@
 p, teacher, /courses, *
+p, teacher, /user/personal, *
 p, student, /courses, read
+p, student, /user/personal, *
 
 g, teacher, student
