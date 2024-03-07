@@ -22,8 +22,8 @@ export class CartController {
   // 新增課程進購物車
   @ApiOperation({ summary: '新增課程進購物車' })
   @Post()
-  async addToCart(@Query('courseId') courseId: string, @Req() req) {
-    return this.cartService.addToCart(courseId, req.user._id);
+  async addToCart(@Query('id') id: string, @Req() req) {
+    return this.cartService.addToCart(id, req.user._id);
   }
 
   // 取得特定帳號的購物車資料
