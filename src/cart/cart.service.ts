@@ -3,6 +3,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from 'src/cart/dto/cart.entity';
 import { Repository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class CartService {
@@ -12,6 +13,9 @@ export class CartService {
   ) {}
 
   async addToCart(courseId: string, ownerId): Promise<Cart> {
+    if (!ObjectId.isValid(courseId))
+      throw new NotFoundException('找不到此課程');
+
     const cart = await this.repo.findOneBy({
       ownerId,
     });
@@ -40,7 +44,12 @@ export class CartService {
       ownerId,
     });
     if (!cart) {
-      throw new NotFoundException('購物車為空');
+      const result = this.repo.create({
+        coursesId: [],
+        courses: [],
+        ownerId,
+      });
+      return this.repo.save(result);
     }
     cart.courses = await Promise.all(
       cart.coursesId.map(async (item) => {
