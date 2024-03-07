@@ -26,6 +26,7 @@ export class CoursesService {
     const course = await this.repo.findOneBy({
       _id: new ObjectId(id),
     });
+    console.log('course', course);
     return course;
   }
   // 取得符合條件的資料列表
