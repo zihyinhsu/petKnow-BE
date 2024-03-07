@@ -28,6 +28,10 @@ export class User {
   @Exclude()
   password: string;
 
+  @Column()
+  @Exclude()
+  googleId: string;
+
   @Column({
     type: 'enum',
     enum: Role,
