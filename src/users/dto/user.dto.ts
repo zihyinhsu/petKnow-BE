@@ -34,8 +34,13 @@ export class userDto {
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   password: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  googleId: string;
 
   @ApiProperty()
   @IsEnum(Role)

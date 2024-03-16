@@ -1,8 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { userDto } from '../dto/user.dto';
 import { AuthService } from './auth.service';
+import { AuthGuard } from '@nestjs/passport';
+
 @ApiTags('註冊 & 登入')
 @Controller('auth')
 export class AuthController {
@@ -19,5 +21,12 @@ export class AuthController {
   @Post('/login')
   async login(@Body() body: LoginUserDto) {
     return this.authService.login(body);
+  }
+
+  @ApiOperation({ summary: 'google OAuth 第三方登入' })
+  @Get('/google/callback')
+  @UseGuards(AuthGuard('google'))
+  async googleAuthCallback(@Req() req) {
+    return this.authService.login(req.user);
   }
 }

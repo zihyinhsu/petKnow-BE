@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
@@ -32,5 +36,20 @@ export class UsersService {
     const result = await this.repo.save(updateResult);
 
     return result;
+  }
+
+  // 在這裡要判斷是 google 進來的使用者還是一般使用者，如果是google進來的使用者，就要先判斷是否有此使用者，如果沒有就新增一個使用者
+  async findOrCreateUser(userData): Promise<User> {
+    const user = await this.repo.findOneBy({
+      email: userData.email,
+    });
+
+    const googleUser = await this.repo.findOneBy({
+      googleId: userData.googleId,
+    });
+    if (googleUser) return googleUser;
+    if (user)
+      throw new BadRequestException('此 email 已在本系統被註冊'); // 如果該使用者已透過系統註冊，則不能讓他再用第三方登入
+    else return await this.repo.save(userData);
   }
 }
