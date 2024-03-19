@@ -1,7 +1,7 @@
-import { CoursesService } from './../courses/courses.service';
+import { CoursesService } from '@/courses/courses.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Cart } from 'src/cart/dto/cart.entity';
+import { Cart } from '@/cart/dto/cart.entity';
 import { Repository } from 'typeorm';
 import { ObjectId } from 'mongodb';
 

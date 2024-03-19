@@ -1,12 +1,12 @@
-import { UsersService } from './../users.service';
+import { UsersService } from '@/users/users.service';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../user.entity';
+import { User } from '@/users/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { userDto } from '../dto/user.dto';
-import { LoginUserDto } from '../dto/login-user.dto';
+import { userDto } from '@/users/dto/user.dto';
+import { LoginUserDto } from '@/users/dto/login-user.dto';
 import { AuthAction, CASBIN_ENFORCER, Role } from './rbac';
 import { Enforcer } from 'casbin';
 

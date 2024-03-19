@@ -4,7 +4,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { UsersService } from '../users.service';
+import { UsersService } from '@/users/users.service';
 
 // 處理 JWT 驗證策略
 @Injectable()

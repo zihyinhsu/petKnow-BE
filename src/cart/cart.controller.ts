@@ -11,7 +11,7 @@ import {
 import { CartService } from './cart.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RoleGuard } from 'src/users/auth/role.guard';
+import { RoleGuard } from '@/users/auth/role.guard';
 
 @ApiTags('購物車')
 @Controller('cart')

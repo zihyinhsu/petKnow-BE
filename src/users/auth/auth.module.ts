@@ -1,11 +1,11 @@
-import { UsersService } from './../users.service';
+import { UsersService } from '@/users/users.service';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { CASBIN_ENFORCER, RegisterOptions } from './rbac';
 import { AuthService } from './auth.service';
 import { newEnforcer } from 'casbin';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../user.entity';
-import { UsersModule } from '../users.module';
+import { User } from '@/users/user.entity';
+import { UsersModule } from '@/users/users.module';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';

@@ -10,4 +10,5 @@ fi
 
 . "$(dirname "$0")/_/husky.sh"
 
+npm test
 npx pretty-quick --staged lint-staged
