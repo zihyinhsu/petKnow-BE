@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UsersService } from '@/users/users.service';
+import { EnvConfigService } from '@/env-config/env-config.service';
 
 // 處理 JWT 驗證策略
 @Injectable()
@@ -13,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       //这里调用了基类 super 的构造函数，并传递了一个配置对象。
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // jwtFromRequest 选项告诉 Passport 从请求的授权头中提取 JWT，这意味着 JWT 应该以 Bearer Token 的形式出现在请求头中。
-      secretOrKey: process.env.JWT_SECRET,
+      secretOrKey: new EnvConfigService().getJwtSecret(),
       ignoreExpiration: false,
     });
   }

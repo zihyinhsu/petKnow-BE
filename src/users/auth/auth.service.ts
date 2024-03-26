@@ -9,6 +9,7 @@ import { userDto } from '@/users/dto/user.dto';
 import { LoginUserDto } from '@/users/dto/login-user.dto';
 import { AuthAction, CASBIN_ENFORCER, Role } from './rbac';
 import { Enforcer } from 'casbin';
+import { EnvConfigService } from '@/env-config/env-config.service';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     @InjectRepository(User) private repo: Repository<User>,
     private usersService: UsersService,
     private jwtService: JwtService,
+    private envConfigService: EnvConfigService,
   ) {}
 
   // 註冊
@@ -58,7 +60,7 @@ export class AuthService {
           role: ExitUser.role,
         },
         {
-          secret: process.env.JWT_SECRET,
+          secret: this.envConfigService.getJwtSecret(),
         },
       );
     }
