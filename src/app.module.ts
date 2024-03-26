@@ -9,6 +9,7 @@ import { CartModule } from './cart/cart.module';
 import { AuthModule } from './users/auth/auth.module';
 import { join } from 'path';
 import { RoleGuard } from './users/auth/role.guard';
+import { EnvConfigService } from './env-config/env-config.service';
 
 @Module({
   imports: [
@@ -17,14 +18,17 @@ import { RoleGuard } from './users/auth/role.guard';
       envFilePath: '.env',
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: process.env.DB_URL,
-      synchronize: true,
-      useNewUrlParser: true,
-      logging: true,
-      useUnifiedTopology: true,
-      autoLoadEntities: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'mongodb',
+        url: new EnvConfigService().getPatKom(),
+        useNewUrlParser: true,
+        logging: true,
+        useUnifiedTopology: true,
+        autoLoadEntities: true,
+        entities: [],
+        synchronize: true,
+      }),
     }),
     CoursesModule,
     CartModule,
@@ -35,6 +39,6 @@ import { RoleGuard } from './users/auth/role.guard';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, ClassSerializerInterceptor, RoleGuard],
+  providers: [AppService, ClassSerializerInterceptor, RoleGuard, EnvConfigService],
 })
 export class AppModule {}

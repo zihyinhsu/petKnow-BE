@@ -33,13 +33,7 @@ import { GoogleOauthStrategy } from './google.strategy';
     UsersModule,
   ],
   controllers: [AuthController],
-  providers: [
-    UsersService,
-    AuthService,
-    JwtService,
-    JwtStrategy,
-    GoogleOauthStrategy,
-  ],
+  providers: [UsersService, AuthService, JwtService, JwtStrategy, GoogleOauthStrategy],
   exports: [PassportModule, JwtStrategy, AuthService],
 })
 export class AuthModule {

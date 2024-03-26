@@ -47,10 +47,7 @@ export class ResponseInterceptor implements NestInterceptor {
           status,
           isSuccess,
           message,
-          data:
-            method.toUpperCase() === 'GET' || originalUrl.includes('login')
-              ? data
-              : undefined,
+          data: method.toUpperCase() === 'GET' || originalUrl.includes('login') ? data : undefined,
         };
       }),
     );
