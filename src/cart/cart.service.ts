@@ -13,8 +13,7 @@ export class CartService {
   ) {}
 
   async addToCart(courseId: string, ownerId): Promise<Cart> {
-    if (!ObjectId.isValid(courseId))
-      throw new NotFoundException('找不到此課程');
+    if (!ObjectId.isValid(courseId)) throw new NotFoundException('找不到此課程');
 
     const cart = await this.repo.findOneBy({
       ownerId,
@@ -52,20 +51,14 @@ export class CartService {
       return this.repo.save(result);
     }
     cart.courses = await Promise.all(
-      cart.coursesId.map(async (item) => {
-        const course = await this.coursesService.findOne(item);
+      cart.coursesId.map(item => {
+        const course = this.coursesService.findOne(item);
         return course;
       }),
     );
 
-    cart.totalPrice = cart.courses.reduce(
-      (total, item) => total + item.price,
-      0,
-    );
-    cart.discountedPrice = cart.courses.reduce(
-      (total, item) => total + item.discountPrice,
-      0,
-    );
+    cart.totalPrice = cart.courses.reduce((total, item) => total + item.price, 0);
+    cart.discountedPrice = cart.courses.reduce((total, item) => total + item.discountPrice, 0);
 
     return cart;
   }
@@ -81,7 +74,7 @@ export class CartService {
     if (!cart.coursesId.includes(courseId)) {
       throw new NotFoundException('此課程已移除');
     }
-    cart.coursesId = cart.coursesId.filter((item) => item !== courseId);
+    cart.coursesId = cart.coursesId.filter(item => item !== courseId);
     const updateResult = await this.repo.create(cart);
     const result = await this.repo.save(updateResult);
     return result;
