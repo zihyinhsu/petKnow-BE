@@ -12,7 +12,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { GoogleOauthStrategy } from './google.strategy';
-import {EnvConfigService} from '@/env-config/env-config.service';
+import { EnvConfigService } from '@/env-config/env-config.service';
 
 @Module({
   imports: [
@@ -34,7 +34,14 @@ import {EnvConfigService} from '@/env-config/env-config.service';
     UsersModule,
   ],
   controllers: [AuthController],
-  providers: [UsersService, AuthService, JwtService, JwtStrategy, GoogleOauthStrategy, EnvConfigService],
+  providers: [
+    UsersService,
+    AuthService,
+    JwtService,
+    JwtStrategy,
+    GoogleOauthStrategy,
+    EnvConfigService,
+  ],
   exports: [PassportModule, JwtStrategy, AuthService],
 })
 export class AuthModule {

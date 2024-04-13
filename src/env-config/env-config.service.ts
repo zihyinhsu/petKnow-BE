@@ -18,7 +18,7 @@ export class EnvConfigService {
     return this.mongodbUrl;
   }
 
-  getJwtSecret(){
+  getJwtSecret() {
     if (!this.jwtSecret) throw new Error('在環境變量中找不到 JWT_SECRET');
     return this.mongodbUrl;
   }
