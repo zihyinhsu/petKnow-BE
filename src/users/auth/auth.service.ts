@@ -42,25 +42,25 @@ export class AuthService {
   async login(userData: LoginUserDto) {
     const { email, password } = userData;
     const ExitUser = await this.usersService.findOne(email);
-    let token: string = '';
+    let token = '';
     if (ExitUser) {
       if (password) {
         const { password: hashedPassword } = ExitUser;
         // 確認輸入的密碼是否正確
         const pass = await bcrypt.compare(password, hashedPassword);
-        if (!pass) return null;
+        if (pass) {
+          token = await this.jwtService.sign(
+            {
+              sub: ExitUser._id,
+              username: ExitUser.name,
+              role: ExitUser.role,
+            },
+            {
+              secret: process.env.JWT_SECRET,
+            },
+          );
+        }
       }
-
-      token = await this.jwtService.sign(
-        {
-          sub: ExitUser._id,
-          username: ExitUser.name,
-          role: ExitUser.role,
-        },
-        {
-          secret: process.env.JWT_SECRET,
-        },
-      );
     }
     return { token };
   }
