@@ -4,5 +4,6 @@ p, teacher, /user/*, *
 p, student, /courses, read
 p, student, /user/*, *
 p, student, /cart, *
+p, student, /cart/*, *
 
 g, teacher, student

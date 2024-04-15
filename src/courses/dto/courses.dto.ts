@@ -69,4 +69,8 @@ export class courseDto {
   @IsBoolean()
   @IsOptional()
   isFree: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  tagNames: string[];
 }
