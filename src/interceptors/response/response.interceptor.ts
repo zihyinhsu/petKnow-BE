@@ -43,14 +43,12 @@ export class ResponseInterceptor implements NestInterceptor {
         } else if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
           message = '系統發生錯誤，請聯繫系統管理員';
         }
+        if (data.message) message = data.message;
         return {
           status,
           isSuccess,
           message,
-          data:
-            method.toUpperCase() === 'GET' || originalUrl.includes('login')
-              ? data
-              : undefined,
+          data: method.toUpperCase() === 'GET' || originalUrl.includes('login') ? data : undefined,
         };
       }),
     );

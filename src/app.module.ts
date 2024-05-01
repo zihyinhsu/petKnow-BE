@@ -9,6 +9,7 @@ import { CartModule } from './cart/cart.module';
 import { AuthModule } from './users/auth/auth.module';
 import { join } from 'path';
 import { RoleGuard } from './users/auth/role.guard';
+import { CouponModule } from './coupon/coupon.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { RoleGuard } from './users/auth/role.guard';
       modelPath: join(__dirname, '../casbin/model.conf'),
       policyAdapter: join(__dirname, '../casbin/policy.csv'),
     }),
+    CouponModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClassSerializerInterceptor, RoleGuard],

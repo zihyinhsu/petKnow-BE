@@ -1,9 +1,12 @@
 p, teacher, /courses, *
 p, teacher, /user/*, *
+p, teacher, /coupon*, *
+p, teacher, /coupon/*, *
 
 p, student, /courses, read
 p, student, /user/*, *
 p, student, /cart, *
 p, student, /cart/*, *
+p, student, /coupon/*, create
 
 g, teacher, student

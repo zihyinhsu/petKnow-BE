@@ -31,8 +31,8 @@ export class Courses {
   @Column()
   price: number;
 
-  @Column()
-  discountPrice: number;
+  // @Column()
+  // discountPrice: number;
 
   @Column()
   isFree: boolean;

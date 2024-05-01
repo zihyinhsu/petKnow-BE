@@ -60,10 +60,10 @@ export class courseDto {
   @IsNotEmpty()
   price: number;
 
-  @ApiPropertyOptional()
-  @IsNumber()
-  @IsOptional()
-  discountPrice: number;
+  // @ApiPropertyOptional()
+  // @IsNumber()
+  // @IsOptional()
+  // discountPrice: number;
 
   @ApiPropertyOptional()
   @IsBoolean()
