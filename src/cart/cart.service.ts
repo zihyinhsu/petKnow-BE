@@ -18,19 +18,27 @@ export class CartService {
     const cart = await this.repo.findOneBy({
       ownerId,
     });
-
     let result;
     if (!cart) {
+      const firstCourse = await this.coursesService.findOne(courseId);
       result = this.repo.create({
         coursesId: [courseId],
+        totalPrice: firstCourse.price,
         ownerId,
       });
-    } else {
+    } else if (cart && courseId) {
       // 如果購物車已經有這個課程，就不要再加入
       if (cart.coursesId.includes(courseId)) {
         throw new NotFoundException('此課程已在購物車中');
       } else {
         cart.coursesId.push(courseId);
+        const courses = await Promise.all(
+          cart.coursesId.map(item => {
+            const course = this.coursesService.findOne(item);
+            return course;
+          }),
+        );
+        cart.totalPrice = courses.reduce((total, item) => total + item.price, 0);
         result = cart;
       }
     }
@@ -38,27 +46,30 @@ export class CartService {
   }
 
   // 取得該帳號的購物車資料
-  async getCart(ownerId): Promise<Cart> {
+  async getCart(ownerId, existCode): Promise<Cart> {
     const cart = await this.repo.findOneBy({
       ownerId,
     });
     if (!cart) {
       const result = this.repo.create({
         coursesId: [],
-        courses: [],
         ownerId,
       });
       return this.repo.save(result);
     }
-    cart.courses = await Promise.all(
+
+    if (existCode) {
+      cart.discountedPrice = cart.totalPrice * (existCode.discountPersent / 100);
+      cart.isCouponUsed = true;
+      await this.repo.save(cart);
+    }
+    const result = cart;
+    result.courses = await Promise.all(
       cart.coursesId.map(item => {
         const course = this.coursesService.findOne(item);
         return course;
       }),
     );
-
-    cart.totalPrice = cart.courses.reduce((total, item) => total + item.price, 0);
-    cart.discountedPrice = cart.courses.reduce((total, item) => total + item.discountPrice, 0);
 
     return cart;
   }

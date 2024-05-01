@@ -21,6 +21,9 @@ export class Cart {
   discountedPrice: number;
 
   @Column()
+  isCouponUsed: boolean;
+
+  @Column()
   @Transform((ownerId: any) => ownerId.value.toHexString(), {
     toPlainOnly: true,
   }) // 只在轉換為普通對象時顯示

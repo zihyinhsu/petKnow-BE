@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Query,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -30,7 +21,7 @@ export class CartController {
   @ApiOperation({ summary: '取得特定帳號的購物車資料' })
   @Get()
   async getCart(@Req() req) {
-    return this.cartService.getCart(req.user._id);
+    return this.cartService.getCart(req.user._id, null);
   }
 
   // 從購物車移除課程
