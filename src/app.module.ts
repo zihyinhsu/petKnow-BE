@@ -11,6 +11,8 @@ import { join } from 'path';
 import { RoleGuard } from './users/auth/role.guard';
 import { CouponModule } from './coupon/coupon.module';
 
+import { OrderModule } from './order/order.module';
+
 @Module({
   imports: [
     UsersModule,
@@ -35,6 +37,7 @@ import { CouponModule } from './coupon/coupon.module';
       policyAdapter: join(__dirname, '../casbin/policy.csv'),
     }),
     CouponModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClassSerializerInterceptor, RoleGuard],

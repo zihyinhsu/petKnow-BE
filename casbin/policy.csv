@@ -8,5 +8,6 @@ p, student, /user/*, *
 p, student, /cart, *
 p, student, /cart/*, *
 p, student, /coupon/*, create
+p, student, /order*, *
 
 g, teacher, student

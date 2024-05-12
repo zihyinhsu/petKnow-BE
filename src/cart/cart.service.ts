@@ -16,7 +16,7 @@ export class CartService {
     if (!ObjectId.isValid(courseId)) throw new NotFoundException('找不到此課程');
 
     const cart = await this.repo.findOneBy({
-      ownerId,
+      ownerId: new ObjectId(ownerId),
     });
     let result;
     if (!cart) {
@@ -89,5 +89,14 @@ export class CartService {
     const updateResult = await this.repo.create(cart);
     const result = await this.repo.save(updateResult);
     return result;
+  }
+
+  // 清空購物車
+  async deleteCart(ownerId): Promise<Cart> {
+    const cart = await this.repo.findOneBy({
+      ownerId,
+    });
+    if (!cart) throw new NotFoundException('購物車為空');
+    return this.repo.remove(cart);
   }
 }
