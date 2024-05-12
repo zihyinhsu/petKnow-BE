@@ -17,8 +17,8 @@ export class CartController {
     return this.cartService.addToCart(id, req.user._id);
   }
 
-  // 取得特定帳號的購物車資料
-  @ApiOperation({ summary: '取得特定帳號的購物車資料' })
+  // 取得購物車資料
+  @ApiOperation({ summary: '取得購物車資料' })
   @Get()
   async getCart(@Req() req) {
     return this.cartService.getCart(req.user._id, null);
