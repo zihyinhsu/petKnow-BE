@@ -1,5 +1,24 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode", // 使用我們自訂的 prettier 排版規則
-  "editor.formatOnSave": true, // 存檔時自動排版 
-  "editor.formatOnPaste": true // 貼上時自動排版
+  "editor.formatOnSave": true, // 存檔時自動排版
+  "editor.formatOnPaste": true, // 貼上時自動排版
+  "todo-tree.regex.regex": "((//|#|<!--|;|/\\*|^)\\s*($TAGS):|^\\s*- \\[ \\])",
+  "todo-tree.general.tags": ["TODO", "FIXME", "UPDATE"],
+  "todo-tree.highlights.customHighlight": {
+    // TODO 立即馬上處理
+    "TODO": {
+      "background": "#f5c018",
+      "foreground": "#000",
+      "iconColour": "#f5c018",
+      "icon": "check",
+      "type": "text-and-comment"
+    },
+    // FIXME 需要修復的事項
+    "FIXME": {
+      "background": "#d9444a",
+      "foreground": "#000",
+      "iconColour": "#d9444a",
+      "type": "text-and-comment"
+    }
+  },
 }

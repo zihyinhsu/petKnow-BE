@@ -3,9 +3,10 @@
   "useTabs": false,
   "printWidth": 100,
   "bracketSpacing": true,
-  "singleQuote": true,
+  "curly": "all",
   "semi": true,
   "arrowParens": "avoid",
   "bracketSameLine": true,
+  "singleQuote": true,
   "trailingComma": "all"
 }
