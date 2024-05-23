@@ -10,6 +10,8 @@ export function setupSwagger(app: INestApplication): void {
   const envService = new EnvService(configService);
   const env = envService.getNodeEnv();
   const server = envService.getServer();
+  const port = envService.getPort();
+  const _server = `${server}:${port}`;
 
   const builder = new DocumentBuilder();
   const config = builder
@@ -25,7 +27,7 @@ export function setupSwagger(app: INestApplication): void {
       },
       'apiKeyAuth',
     )
-    .addServer(server, env)
+    .addServer(_server, env)
     .build();
   const document = SwaggerModule.createDocument(app, config);
   const options: SwaggerCustomOptions = {

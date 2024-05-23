@@ -12,9 +12,11 @@ import { RoleGuard } from './api/users/auth/role.guard';
 import { CouponModule } from './api/coupon/coupon.module';
 
 import { OrderModule } from './api/order/order.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
+    DatabaseModule,
     UsersModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
