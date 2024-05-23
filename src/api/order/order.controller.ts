@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RoleGuard } from 'src/users/auth/role.guard';
+import { RoleGuard } from 'src/api/users/auth/role.guard';
 import { orderDto } from './dto/order.dto';
 
 @ApiTags('訂單')

@@ -1,4 +1,4 @@
-import { UsersService } from './../users.service';
+import { UsersService } from '../users.service';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

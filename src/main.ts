@@ -1,11 +1,7 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
-import {
-  DocumentBuilder,
-  SwaggerCustomOptions,
-  SwaggerModule,
-} from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 import {
   INestApplication,
   HttpStatus,
@@ -13,7 +9,7 @@ import {
   ValidationPipe,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
-import { ResponseInterceptor } from './interceptors/response/response.interceptor';
+import { ResponseInterceptor } from './api/interceptors/response/response.interceptor';
 
 async function bootstrap() {
   dotenv.config();

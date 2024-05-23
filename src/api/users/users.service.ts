@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
@@ -16,9 +12,7 @@ export class UsersService {
   async findOne(query): Promise<User> {
     if (!query) return null;
     const user = await this.repo.findOne({
-      where: query.includes('@')
-        ? { email: query }
-        : { _id: new ObjectId(query) },
+      where: query.includes('@') ? { email: query } : { _id: new ObjectId(query) },
     });
     return user;
   }

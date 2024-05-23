@@ -1,4 +1,4 @@
-import { UsersService } from './../users.service';
+import { UsersService } from '../users.service';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { CASBIN_ENFORCER, RegisterOptions } from './rbac';
 import { AuthService } from './auth.service';
@@ -33,13 +33,7 @@ import { GoogleOauthStrategy } from './google.strategy';
     UsersModule,
   ],
   controllers: [AuthController],
-  providers: [
-    UsersService,
-    AuthService,
-    JwtService,
-    JwtStrategy,
-    GoogleOauthStrategy,
-  ],
+  providers: [UsersService, AuthService, JwtService, JwtStrategy, GoogleOauthStrategy],
   exports: [PassportModule, JwtStrategy, AuthService],
 })
 export class AuthModule {

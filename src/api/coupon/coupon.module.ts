@@ -3,7 +3,7 @@ import { CouponController } from './coupon.controller';
 import { CouponService } from './coupon.service';
 import { Coupon } from './dto/coupon.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CartModule } from 'src/cart/cart.module';
+import { CartModule } from 'src/api/cart/cart.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Coupon]), CouponModule, CartModule],

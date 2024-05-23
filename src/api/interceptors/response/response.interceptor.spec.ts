@@ -1,4 +1,4 @@
-import { Courses } from 'src/courses/dto/courses.entity';
+import { Courses } from 'src/api/courses/dto/courses.entity';
 import { ResponseInterceptor } from './response.interceptor';
 
 describe('ResponseInterceptor', () => {
