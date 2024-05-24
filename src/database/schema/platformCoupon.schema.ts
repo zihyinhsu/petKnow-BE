@@ -30,7 +30,7 @@ interface IPlatformCoupon {
 /**
  * 平台優惠卷資料表
  */
-@Schema({ timestamps: true, collection: 'platform_coupon' })
+@Schema({ timestamps: true })
 class PlatformCoupon extends Document implements IPlatformCoupon {
   /** 標籤名稱 */
   @Prop({ type: [String], default: [] })

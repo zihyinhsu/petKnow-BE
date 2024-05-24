@@ -37,7 +37,7 @@ interface IUser {
 /**
  * 使用者資料表
  */
-@Schema({ timestamps: { createdAt: true, updatedAt: true } })
+@Schema({ timestamps: true })
 class User extends Document implements IUser {
   /** 身份 Id */
   // UPDATE:  @Prop({ type: [String], required: true }) // 暫時不做身分權限

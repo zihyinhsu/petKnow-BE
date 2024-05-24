@@ -17,6 +17,10 @@ interface IChapter {
   totalTime: number;
   /** 章節總數量 */
   totalNumber: number;
+  /** 創建時間 */
+  createdAt: Date;
+  /** 更新時間 */
+  updatedAt: Date;
 }
 //#endregion IChapter [ 章節資料結構 ] End
 
@@ -24,7 +28,7 @@ interface IChapter {
 /**
  * 章節資料表
  */
-@Schema()
+@Schema({ timestamps: true })
 class Chapter extends Document implements IChapter {
   /** 子章節資料 */
   @Prop({
@@ -63,6 +67,14 @@ class Chapter extends Document implements IChapter {
     required: [true, '請填寫必填欄位'],
   })
   totalNumber: number;
+
+  /** 創建時間 */
+  @Prop({ type: Date, default: Date.now })
+  createdAt: Date;
+
+  /** 更新時間 */
+  @Prop({ type: Date, default: Date.now })
+  updatedAt: Date;
 }
 //#endregion Chapter [ 章節資料表 ] End
 

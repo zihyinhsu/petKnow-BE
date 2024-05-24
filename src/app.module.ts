@@ -1,6 +1,9 @@
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ApplicationModule } from './application/application.module';
+import { DatabaseModule } from './database/database.module';
+
 import { UsersModule } from './api/users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -10,12 +13,11 @@ import { AuthModule } from './api/users/auth/auth.module';
 import { join } from 'path';
 import { RoleGuard } from './api/users/auth/role.guard';
 import { CouponModule } from './api/coupon/coupon.module';
-
 import { OrderModule } from './api/order/order.module';
-import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
+    ApplicationModule,
     DatabaseModule,
     UsersModule,
     ConfigModule.forRoot({
