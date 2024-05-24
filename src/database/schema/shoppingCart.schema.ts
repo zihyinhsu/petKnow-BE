@@ -1,16 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { User } from './user.schema';
 
 //#region IShoppingCart [ 購物車資料結構 ]
 /**
  * 購物車資料結構
  */
 interface IShoppingCart {
-  /** 使用者 Id */
-  user: Types.ObjectId;
-  /** 優惠卷 Id */
+  /** 使用者資料 */
+  user: User;
+  /** 課程 Id */
   courseIds: string[];
-  /** 使用者 Id */
+  /** 優惠卷代碼 */
   couponCode?: string;
   /** 創建時間 */
   createdAt?: Date;
@@ -25,7 +26,7 @@ interface IShoppingCart {
  */
 @Schema({ timestamps: true })
 class ShoppingCart extends Document implements IShoppingCart {
-  /** 使用者 Id */
+  /** 使用者資料 */
   @Prop({
     type: Types.ObjectId,
     ref: 'User',
@@ -33,13 +34,13 @@ class ShoppingCart extends Document implements IShoppingCart {
     index: true,
     required: [true, '請填寫必填欄位'],
   })
-  user: Types.ObjectId;
+  user: User;
 
-  /** 優惠卷 Id */
+  /** 課程 Id */
   @Prop({ type: [String], required: [true, '課程id為必填欄位'] })
   courseIds: string[];
 
-  /** 使用者 Id */
+  /** 優惠卷代碼 */
   @Prop({ maxlength: 20, default: '' })
   couponCode: string;
 

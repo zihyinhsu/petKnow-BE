@@ -1,15 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { Course } from './course.schema';
+import { Order } from './order.schema';
 
 //#region IOrderDetail [ 訂單詳情資料結構 ]
 /**
  * 訂單詳情資料結構
  */
 interface IOrderDetail {
-  /** 訂單 ID */
-  order: Types.ObjectId;
-  /** 課程 ID */
-  course: Types.ObjectId;
+  /** 訂單資料 */
+  order: Order;
+  /** 課程資料 */
+  course: Course;
   /** 商品名稱 */
   title: string;
   /** 價格 */
@@ -34,21 +36,21 @@ interface IOrderDetail {
  */
 @Schema({ timestamps: true })
 class OrderDetail extends Document implements IOrderDetail {
-  /** 訂單 ID */
+  /** 訂單資料 */
   @Prop({
     type: Types.ObjectId,
     ref: 'Order',
     required: [true, '請填寫必填欄位'],
   })
-  order: Types.ObjectId;
+  order: Order;
 
-  /** 課程 ID */
+  /** 課程資料 */
   @Prop({
     type: Types.ObjectId,
-    ref: 'CourseHierarchys',
+    ref: 'Course',
     required: [true, '請填寫必填欄位'],
   })
-  course: Types.ObjectId;
+  course: Course;
 
   /** 課程標題 */
   @Prop({ required: [true, '請填寫必填欄位'] })

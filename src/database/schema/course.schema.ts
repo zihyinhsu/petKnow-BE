@@ -1,14 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { LevelEnum } from '../enum/level.enum';
+import { Chapter } from './chapter.schema';
+import { User } from './user.schema';
 
 //#region ICourse [ 課程資料結構 ]
 /**
  * 課程資料結構
  */
 interface ICourse {
-  /** 使用者 ID */
-  user: Types.ObjectId;
+  /** 使用者資料 */
+  user: User;
+  /** 章節資料 */
+  chapter: Chapter[];
   /** 標籤名稱 */
   tagNames: string[];
   /** 封面圖片 */
@@ -56,14 +60,21 @@ interface ICourse {
  */
 @Schema({ timestamps: true })
 class Course extends Document implements ICourse {
-  /** 使用者 ID */
+  /** 使用者資料 */
   @Prop({
     type: Types.ObjectId,
     ref: 'User',
     required: [true, '請填寫必填欄位'],
     index: true,
   })
-  user: Types.ObjectId;
+  user: User;
+
+  /** 章節資料 */
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Chapter',
+  })
+  chapter: Chapter[];
 
   /** 標籤名稱 */
   @Prop({ type: [String], default: [] })

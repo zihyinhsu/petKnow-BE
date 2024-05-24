@@ -1,11 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+import { Subchapter } from './subchapter.schema';
 
 //#region IChapter [ 章節資料結構 ]
 /**
  * 章節資料結構
  */
 interface IChapter {
+  /** 子章節資料 */
+  subchapter: Subchapter[];
   /** 章節序號 */
   sequence: number;
   /** 章節標題 */
@@ -23,6 +26,13 @@ interface IChapter {
  */
 @Schema()
 class Chapter extends Document implements IChapter {
+  /** 子章節資料 */
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Subchapter',
+  })
+  subchapter: Subchapter[];
+
   /** 章節序號 */
   @Prop({
     type: Number,
