@@ -9,7 +9,7 @@ export function setupSwagger(app: INestApplication): void {
     .setTitle('petKnow 寵知')
     .setDescription('API 文件')
     .setVersion('1.0.0')
-    .addApiKey(
+    .addBearerAuth(
       {
         type: 'apiKey',
         name: 'authorization',
