@@ -64,7 +64,7 @@ export class EnvService {
    *  讀取 伺服器網域名稱
    */
   getServer(): string {
-    const server = this.configService.get<string>('SERVER', '');
+    const server = this.configService.get<string>('SERVER', 'http://localhost');
     if (!server) {
       // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
       throw new Error('在環境變量中找不到 SERVER');
