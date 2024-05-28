@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RoleGuard } from 'src/api/users/auth/role.guard';
+import { RoleGuard } from '@api/users/auth/role.guard';
 import { CouponService } from './coupon.service';
 import { couponDto } from './dto/coupon.dto';
 import { Coupon } from './dto/coupon.entity';

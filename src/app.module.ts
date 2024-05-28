@@ -1,19 +1,19 @@
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ApplicationModule } from './application/application.module';
+import { ApplicationModule } from '@app/application.module';
 import { DatabaseModule } from './database/database.module';
 
-import { UsersModule } from './api/users/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from '@api/users/users.module';
 import { ConfigModule } from '@nestjs/config';
-import { CoursesModule } from './api/courses/courses.module';
-import { CartModule } from './api/cart/cart.module';
-import { AuthModule } from './api/users/auth/auth.module';
-import { join } from 'path';
-import { RoleGuard } from './api/users/auth/role.guard';
-import { CouponModule } from './api/coupon/coupon.module';
-import { OrderModule } from './api/order/order.module';
+import { CoursesModule } from '@api/courses/courses.module';
+import { CartModule } from '@api/cart/cart.module';
+import { AuthModule } from '@api/users/auth/auth.module';
+import { RoleGuard } from '@api/users/auth/role.guard';
+import { CouponModule } from '@api/coupon/coupon.module';
+import { OrderModule } from '@api/order/order.module';
 
 @Module({
   imports: [

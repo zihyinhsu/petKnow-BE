@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { Coupon } from './dto/coupon.entity';
 import { couponDto } from './dto/coupon.dto';
-import { CartService } from 'src/api/cart/cart.service';
+import { CartService } from '@api/cart/cart.service';
 import { ObjectId } from 'mongodb';
 
 @Injectable()

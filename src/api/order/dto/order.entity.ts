@@ -1,7 +1,7 @@
 import { Entity, Column, ObjectIdColumn, CreateDateColumn } from 'typeorm'; //裝飾器
 import { ObjectId } from 'mongodb';
 import { Transform } from 'class-transformer'; // 濾掉不想顯示的欄位(保護敏感資訊)
-import { Cart } from 'src/api/cart/dto/cart.entity';
+import { Cart } from '@api/cart/dto/cart.entity';
 @Entity()
 export class Order {
   @ObjectIdColumn()

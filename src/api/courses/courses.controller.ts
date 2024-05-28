@@ -22,7 +22,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { RoleGuard } from 'src/api/users/auth/role.guard';
+import { RoleGuard } from '@api/users/auth/role.guard';
 
 @ApiTags('課程')
 @ApiCreatedResponse({ description: '新增成功' })

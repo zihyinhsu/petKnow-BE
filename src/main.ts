@@ -8,10 +8,10 @@ import {
   Logger,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { setupSwagger, swaggerPrefix } from './application/config/swagger';
 import { AppModule } from './app.module';
-import { ResponseInterceptor } from './application/response/response.interceptor';
-import { EnvService } from './application/config/env/env.service';
+import { setupSwagger, swaggerPrefix } from '@app/config/swagger';
+import { ResponseInterceptor } from '@app/response/response.interceptor';
+import { EnvService } from '@app/config/env/env.service';
 
 async function bootstrap() {
   dotenv.config();

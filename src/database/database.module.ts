@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
-import { EnvService } from 'src/application/config/env/env.service';
-import { EnvModule } from 'src/application/config/env/env.module';
+import { EnvService } from '@app/config/env/env.service';
+import { EnvModule } from '@app/config/env/env.module';
 import { Chapter, ChapterSchema } from './schema/chapter.schema';
 import { Course, CourseSchema } from './schema/course.schema';
 import { CourseTag, CourseTagSchema } from './schema/courseTag.schema';
