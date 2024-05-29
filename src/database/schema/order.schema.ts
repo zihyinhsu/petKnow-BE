@@ -68,11 +68,12 @@ class Order extends Document implements IOrder {
   orderDetail: OrderDetail[];
 
   /** 使用者名稱 */
-  @Prop({ required: [true, '請填寫必填欄位'] })
+  @Prop({ type: String, required: [true, '請填寫必填欄位'] })
   userName: string;
 
   /** 商家訂單號 */
   @Prop({
+    type: String,
     unique: true,
     index: true,
     maxlength: 30,
@@ -81,47 +82,47 @@ class Order extends Document implements IOrder {
   merchantOrderNo: string;
 
   /** 交易 SHA */
-  @Prop({ required: [true, '請填寫必填欄位'] })
+  @Prop({ type: String, required: [true, '請填寫必填欄位'] })
   tradeSha: string;
 
   /** 交易信息 */
-  @Prop({ required: [true, '請填寫必填欄位'] })
+  @Prop({ type: String, required: [true, '請填寫必填欄位'] })
   tradeInfo: string;
 
   /** 商家 ID */
-  @Prop({ maxlength: 20, required: [true, '請填寫必填欄位'] })
+  @Prop({ type: String, maxlength: 20, required: [true, '請填寫必填欄位'] })
   merchantID: string;
 
   /** 版本 */
-  @Prop({ maxlength: 5, required: [true, '請填寫必填欄位'] })
+  @Prop({ type: String, maxlength: 5, required: [true, '請填寫必填欄位'] })
   version: number;
 
   /** 金額 */
-  @Prop({ maxlength: 10, required: [true, '請填寫必填欄位'] })
+  @Prop({ type: Number, maxlength: 10, required: [true, '請填寫必填欄位'] })
   price: number;
 
   /** 優惠卷代碼 */
-  @Prop({ maxlength: 20 })
+  @Prop({ type: String, maxlength: 20 })
   couponCode?: string;
 
   /** 優惠價格 */
-  @Prop()
+  @Prop({ type: Number })
   couponPrice?: number;
 
   /** 商品描述 */
-  @Prop({ maxlength: 50, required: [true, '請填寫必填欄位'] })
+  @Prop({ type: String, maxlength: 50, required: [true, '請填寫必填欄位'] })
   itemDesc: string;
 
   /** 電子郵件 */
-  @Prop({ maxlength: 50, required: [true, '請填寫必填欄位'] })
+  @Prop({ type: String, maxlength: 50, required: [true, '請填寫必填欄位'] })
   email: string;
 
   /** 時間戳 */
-  @Prop({ required: [true, '請填寫必填欄位'] })
+  @Prop({ type: Number, required: [true, '請填寫必填欄位'] })
   timeStamp: number;
 
   /** 是否付款 */
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   isPayment?: boolean;
 
   /** 創建時間 */

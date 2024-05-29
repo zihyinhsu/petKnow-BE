@@ -37,23 +37,23 @@ class PlatformCoupon extends Document implements IPlatformCoupon {
   names: string[];
 
   /** 優惠卷代碼 */
-  @Prop({ required: true, maxlength: 20 })
+  @Prop({ type: String, required: true, maxlength: 20 })
   couponCode: string;
 
   /** 優惠價格 */
-  @Prop({ required: true })
+  @Prop({ type: Number, required: true })
   price: number;
 
   /** 開始日期 */
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   startDate: Date;
 
   /** 結束日期 */
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   endDate: Date;
 
   /** 是否啟用 */
-  @Prop({ required: true, default: false })
+  @Prop({ type: Date, required: true, default: false })
   isEnabled: boolean;
 
   /** 創建時間 */

@@ -41,7 +41,7 @@ class ShoppingCart extends Document implements IShoppingCart {
   courseIds: string[];
 
   /** 優惠卷代碼 */
-  @Prop({ maxlength: 20, default: '' })
+  @Prop({ type: String, maxlength: 20, default: '' })
   couponCode: string;
 
   /** 創建時間 */

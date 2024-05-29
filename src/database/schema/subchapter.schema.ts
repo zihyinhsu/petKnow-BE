@@ -18,6 +18,10 @@ interface ISubchapter {
   fileType: number;
   /** 子章節時長 */
   time: number;
+  /** 創建時間 */
+  createdAt: Date;
+  /** 更新時間 */
+  updatedAt: Date;
 }
 //#endregion ISubchapter [ 子章節資料結構 ] End
 
@@ -72,6 +76,14 @@ class Subchapter extends Document implements ISubchapter {
     required: [true, '請填寫必填欄位'],
   })
   time: number;
+
+  /** 創建時間 */
+  @Prop({ type: Date, default: Date.now })
+  createdAt: Date;
+
+  /** 更新時間 */
+  @Prop({ type: Date, default: Date.now })
+  updatedAt: Date;
 }
 //#endregion Subchapter [ 子章節資料表 ] End
 

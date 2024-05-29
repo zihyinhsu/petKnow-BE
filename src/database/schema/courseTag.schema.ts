@@ -23,6 +23,7 @@ interface ICourseTag {
 class CourseTag extends Document implements ICourseTag {
   /** 標籤名稱 */
   @Prop({
+    type: String,
     unique: true,
     required: [true, '標籤未填寫'],
   })

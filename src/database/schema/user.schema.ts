@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Role } from '@data/enum/role.enum';
 
 //#region User [ 使用者資料結構 ]
 /**
@@ -7,7 +8,7 @@ import { Document } from 'mongoose';
  */
 interface IUser {
   /** 身份 Id */
-  roleName: string[];
+  role: Role[];
   /** 名字 */
   name: string;
   /** 大頭照 */
@@ -41,39 +42,39 @@ interface IUser {
 class User extends Document implements IUser {
   /** 身份 Id */
   // UPDATE:  @Prop({ type: [String], required: true }) // 暫時不做身分權限
-  @Prop({ type: [String] })
-  roleName: string[];
+  @Prop({ type: [String], enum: Role, default: [Role.STUDENT] })
+  role: Role[];
 
   /** 名字 */
-  @Prop({ required: true, maxlength: 50 })
+  @Prop({ type: String, required: true, maxlength: 50 })
   name: string;
 
   /** 大頭照 */
-  @Prop({ maxlength: 255 })
+  @Prop({ type: String, maxlength: 255 })
   mugShot: string;
 
   /** 電子郵件 */
-  @Prop({ required: true, unique: true, maxlength: 255 })
+  @Prop({ type: String, required: true, unique: true, maxlength: 255 })
   email: string;
 
   /** 密碼 (加密存儲) */
-  @Prop({ required: true, maxlength: 255 })
+  @Prop({ type: String, required: true, maxlength: 255 })
   password: string;
 
   /** 講師簡介 */
-  @Prop({ maxlength: 5000 })
+  @Prop({ type: String, maxlength: 5000 })
   lecturerBio: string;
 
   /** 是否凍結 */
-  @Prop({ required: true, default: true })
+  @Prop({ type: Boolean, required: true, default: true })
   isFrozen: boolean;
 
   /** 是否啟用通知 */
-  @Prop({ required: true, default: true })
+  @Prop({ type: Boolean, required: true, default: true })
   isNotificationEnabled: boolean;
 
   /** 是否啟用隱私 */
-  @Prop({ required: true, default: true })
+  @Prop({ type: Boolean, required: true, default: true })
   isPrivacyEnabled: boolean;
 
   /** 創建時間 */

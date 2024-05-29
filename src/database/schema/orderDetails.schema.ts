@@ -53,19 +53,19 @@ class OrderDetail extends Document implements IOrderDetail {
   course: Course;
 
   /** 課程標題 */
-  @Prop({ required: [true, '請填寫必填欄位'] })
+  @Prop({ type: String, required: [true, '請填寫必填欄位'] })
   title: string;
 
   /** 價格 */
-  @Prop({ required: [true, '請填寫必填欄位'] })
+  @Prop({ type: Number, required: [true, '請填寫必填欄位'] })
   price: number;
 
   /** 折扣價格 */
-  @Prop()
+  @Prop({ type: Number })
   discountPrice?: number;
 
   /** 是否免費 */
-  @Prop()
+  @Prop({ type: Boolean })
   isFree?: boolean;
 
   /** 創建時間 */
