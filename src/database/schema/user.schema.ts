@@ -46,7 +46,7 @@ class User extends Document implements IUser {
   role: Role[];
 
   /** 名字 */
-  @Prop({ type: String, required: true, maxlength: 50 })
+  @Prop({ type: String, required: true, maxlength: 50, minlength: 3 })
   name: string;
 
   /** 大頭照 */

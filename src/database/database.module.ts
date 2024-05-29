@@ -16,6 +16,7 @@ import { CourseHierarchy, CourseHierarchySchema } from './schema/courseHierarchy
 
 @Module({
   imports: [
+    EnvModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       useFactory: async (configService: ConfigService) => ({
@@ -23,7 +24,6 @@ import { CourseHierarchy, CourseHierarchySchema } from './schema/courseHierarchy
       }),
       inject: [ConfigService],
     }),
-    EnvModule,
     MongooseModule.forFeature([
       { name: CourseHierarchy.name, schema: CourseHierarchySchema },
       { name: Chapter.name, schema: ChapterSchema },
@@ -37,5 +37,6 @@ import { CourseHierarchy, CourseHierarchySchema } from './schema/courseHierarchy
       { name: User.name, schema: UserSchema },
     ]),
   ],
+  exports: [MongooseModule],
 })
 export class DatabaseModule {}
