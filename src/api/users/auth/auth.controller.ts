@@ -1,19 +1,24 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoginUserDto } from '../dto/login-user.dto';
-import { userDto } from '../dto/user.dto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
+import { UserService } from 'api2/user/user.service';
+import { CreateUserDto } from 'api2/user/dto/create-user.dto';
 
 @ApiTags('註冊 & 登入')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
   // 註冊
   @ApiOperation({ summary: '註冊' })
   @Post('/signup')
-  signUp(@Body() body: userDto) {
-    return this.authService.signup(body);
+  signUp(@Body() body: CreateUserDto) {
+    return this.userService.signup(body);
+    // return this.authService.signup(body);
   }
 
   // 登入

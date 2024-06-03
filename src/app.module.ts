@@ -14,7 +14,6 @@ import { AuthModule } from '@api/users/auth/auth.module';
 import { RoleGuard } from '@api/users/auth/role.guard';
 import { CouponModule } from '@api/coupon/coupon.module';
 import { OrderModule } from '@api/order/order.module';
-import { UserModule } from './api2/user/user.module';
 import { Api2Module } from './api2/api2.module';
 
 @Module({
@@ -44,7 +43,6 @@ import { Api2Module } from './api2/api2.module';
     }),
     CouponModule,
     OrderModule,
-    UserModule,
     Api2Module,
   ],
   controllers: [AppController],

@@ -12,6 +12,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { GoogleOauthStrategy } from './google.strategy';
+// import { UserService } from 'api2/user/user.service';
+import { Api2Module } from 'api2/api2.module';
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { GoogleOauthStrategy } from './google.strategy';
     }),
     TypeOrmModule.forFeature([User]),
     UsersModule,
+    Api2Module,
   ],
   controllers: [AuthController],
   providers: [UsersService, AuthService, JwtService, JwtStrategy, GoogleOauthStrategy],
