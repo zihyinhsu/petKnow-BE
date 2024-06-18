@@ -74,6 +74,21 @@ export class EnvService {
   }
   //#endregion getServer [ 讀取 伺服器網域名稱 ] End
 
+  //#region getEnv [ 讀取 目前環境 ]
+  /**
+   *  讀取 目前環境
+   */
+  getIsWaggerJson(): string {
+    const isWaggerJson = this.configService.get<string>('IS_WAGGER_JSON', 'false');
+    if (!isWaggerJson) {
+      // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
+      throw new Error('在環境變量中找不到 IS_WAGGER_JSON');
+    }
+
+    return isWaggerJson;
+  }
+  //#endregion getEnv [ 讀取 目前環境 ] End
+
   //#region getPatKomDB [ 讀取 PatKom 資料庫 ]
   /**
    *  讀取 PatKom 資料庫
