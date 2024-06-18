@@ -10,5 +10,6 @@ import { EnvService } from './env.service';
     }),
   ],
   providers: [EnvService, ConfigService],
+  exports: [EnvService],
 })
 export class EnvModule {}

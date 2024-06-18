@@ -11,8 +11,8 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
-      "@app/*": ["application/*"],
       "@api/*": ["api/*"],
+      "@config/*": ["config/*"],
       "@data/*": ["database/*"]
     },
     "incremental": true,

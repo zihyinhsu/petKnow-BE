@@ -9,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
-import { setupSwagger, swaggerPrefix } from '@app/config/swagger';
-import { ResponseInterceptor } from '@app/response/response.interceptor';
-import { EnvService } from '@app/config/env/env.service';
+import { SwaggerService } from '@config/swagger/swagger.service';
+import { ResponseInterceptor } from '@config/response/response.interceptor';
+import { EnvService } from '@config/env/env.service';
 
 async function bootstrap() {
   dotenv.config();
@@ -19,10 +19,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = new ConfigService();
   const envService = new EnvService(configService);
+  const swaggerService = new SwaggerService();
   const port = envService.getPort();
   const server = envService.getServer();
 
-  setupSwagger(app);
+  swaggerService.initial(app);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -40,7 +41,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector))); //全域攔截器，攔截掉敏感資料
   app.useGlobalInterceptors(new ResponseInterceptor()); //全域攔截器，制定統一的 response
   await app.listen(port);
-  Logger.log(`🚀 Application is running on: ${server}:${port}/${swaggerPrefix}`);
+  Logger.log(`🚀 Application is running on: ${server}:${port}/${swaggerService.swaggerPrefix}`);
 }
 
 bootstrap();
