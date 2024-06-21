@@ -93,7 +93,12 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@api/(.*)$": "<rootDir>/api/$1",
+      "^@config/(.*)$": "<rootDir>/config/$1",
+      "^@data/(.*)$": "<rootDir>/database/$1"
+    }
   },
   "engines": {
     "node": ">=16.20.1"
