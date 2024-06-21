@@ -8,6 +8,8 @@ import { CouponModule } from './coupon/coupon.module';
 import { OrderModule } from './order/order.module';
 import { AuthModule } from './users/auth/auth.module';
 import { join } from 'path';
+import { BackstageModule } from './backstage/backstage.module';
+import { FakeInformationModule } from './fake-information/fake-information.module';
 
 @Module({
   imports: [
@@ -29,11 +31,13 @@ import { join } from 'path';
     CartModule,
     AuthModule.register({
       global: true,
-      modelPath: join(__dirname, '../../casbin/model.conf'),
-      policyAdapter: join(__dirname, '../../casbin/policy.csv'),
+      modelPath: join(process.cwd(), 'casbin/model.conf'),
+      policyAdapter: join(process.cwd(), 'casbin/policy.csv'),
     }),
     CouponModule,
     OrderModule,
+    BackstageModule,
+    FakeInformationModule,
   ],
   controllers: [],
   providers: [],

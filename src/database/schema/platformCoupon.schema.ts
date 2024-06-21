@@ -8,17 +8,17 @@ import { Document } from 'mongoose';
 interface IPlatformCoupon {
   // UPDATE: 未完層項目，未來改成讀取 courseTags 資料表
   /** 標籤名稱 */
-  names: string[];
+  tagNames: string[];
   /** 優惠卷代碼 */
   couponCode: string;
   /** 優惠價格 */
   price: number;
+  /** 是否啟用 */
+  isEnabled: boolean;
   /** 開始日期 */
   startDate: Date;
   /** 結束日期 */
   endDate: Date;
-  /** 是否啟用 */
-  isEnabled: boolean;
   /** 創建時間 */
   createdAt?: Date;
   /** 更新時間 */
@@ -34,7 +34,7 @@ interface IPlatformCoupon {
 class PlatformCoupon extends Document implements IPlatformCoupon {
   /** 標籤名稱 */
   @Prop({ type: [String], default: [] })
-  names: string[];
+  tagNames: string[];
 
   /** 優惠卷代碼 */
   @Prop({ type: String, required: true, maxlength: 20 })
@@ -44,6 +44,10 @@ class PlatformCoupon extends Document implements IPlatformCoupon {
   @Prop({ type: Number, required: true })
   price: number;
 
+  /** 是否啟用 */
+  @Prop({ type: Boolean, required: true, default: false })
+  isEnabled: boolean;
+
   /** 開始日期 */
   @Prop({ type: Date, required: true })
   startDate: Date;
@@ -51,10 +55,6 @@ class PlatformCoupon extends Document implements IPlatformCoupon {
   /** 結束日期 */
   @Prop({ type: Date, required: true })
   endDate: Date;
-
-  /** 是否啟用 */
-  @Prop({ type: Date, required: true, default: false })
-  isEnabled: boolean;
 
   /** 創建時間 */
   @Prop({ type: Date, default: Date.now })

@@ -316,4 +316,10 @@ class CourseHierarchy extends Document implements ICourseHierarchy {
 
 const CourseHierarchySchema = SchemaFactory.createForClass(CourseHierarchy);
 
-export { CourseHierarchy, CourseHierarchySchema, ICourseHierarchy, IChapter, ISubchapter };
+export {
+  CourseHierarchy,
+  CourseHierarchySchema,
+  ICourseHierarchy as ICourse,
+  IChapter,
+  ISubchapter,
+};

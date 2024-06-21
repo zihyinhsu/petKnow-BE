@@ -8,23 +8,23 @@ import { Role } from '@data/enum/role.enum';
  */
 interface IUser {
   /** 身份 Id */
-  role: Role[];
+  role?: Role[];
   /** 名字 */
   name: string;
   /** 大頭照 */
-  mugShot: string;
+  mugShot?: string;
   /** 電子郵件 */
   email: string;
   /** 密碼 (加密存儲) */
   password: string;
   /** 講師簡介 */
-  lecturerBio: string;
+  lecturerBio?: string;
   /** 是否凍結 */
-  isFrozen: boolean;
+  isFrozen?: boolean;
   /** 是否啟用通知 */
-  isNotificationEnabled: boolean;
+  isNotificationEnabled?: boolean;
   /** 是否啟用隱私 */
-  isPrivacyEnabled: boolean;
+  isPrivacyEnabled?: boolean;
   /** 最後登入時間 */
   lastLoginTime?: Date;
   /** 創建時間 */
