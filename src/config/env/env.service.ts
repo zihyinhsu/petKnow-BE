@@ -7,10 +7,14 @@ import { Injectable } from '@nestjs/common';
  */
 @Injectable()
 export class EnvService {
+  private configService: ConfigService;
+
   /**
    * @param configService - 用於訪問配置變數的服務。
    */
-  constructor(private configService: ConfigService) {}
+  constructor() {
+    this.configService = new ConfigService();
+  }
 
   //#region getKey [ 讀取 env 文件 Key 對應的 Value ]
   /**
@@ -34,7 +38,7 @@ export class EnvService {
    *  讀取 埠
    */
   getPort(): string {
-    const port = this.configService.get<string>('PORT', '3000');
+    const port = this.configService.get<string>('PORT', '8000');
     if (!port) {
       // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
       throw new Error('在環境變量中找不到 PORT');

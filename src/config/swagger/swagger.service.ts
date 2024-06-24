@@ -1,6 +1,5 @@
 import { Injectable, INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule, SwaggerCustomOptions } from '@nestjs/swagger';
-import { ConfigService } from '@nestjs/config';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 import { EnvService } from '@config/env/env.service';
@@ -10,8 +9,7 @@ export class SwaggerService {
   swaggerPrefix = 'api';
 
   initial(app: INestApplication) {
-    const configService = new ConfigService();
-    const envService = new EnvService(configService);
+    const envService = new EnvService();
     const isWaggerJson = envService.getIsWaggerJson();
 
     const builder = new DocumentBuilder();

@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigService } from '@nestjs/config';
 import { EnvService } from '@config/env/env.service';
 import { EnvModule } from '@config/env/env.module';
 import { Chapter, ChapterSchema } from './schema/chapter.schema';
@@ -19,10 +18,10 @@ import { CourseHierarchy, CourseHierarchySchema } from './schema/courseHierarchy
     EnvModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: new EnvService(configService).getPatKomDB(),
+      useFactory: async (envService: EnvService) => ({
+        uri: envService.getPatKomDB(),
       }),
-      inject: [ConfigService],
+      inject: [EnvService],
     }),
     MongooseModule.forFeature([
       { name: CourseHierarchy.name, schema: CourseHierarchySchema },

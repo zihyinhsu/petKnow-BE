@@ -7,7 +7,6 @@ import {
   ClassSerializerInterceptor,
   Logger,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { SwaggerService } from '@config/swagger/swagger.service';
 import { ResponseInterceptor } from '@config/response/response.interceptor';
@@ -17,8 +16,7 @@ async function bootstrap() {
   dotenv.config();
 
   const app = await NestFactory.create(AppModule);
-  const configService = new ConfigService();
-  const envService = new EnvService(configService);
+  const envService = new EnvService();
   const swaggerService = new SwaggerService();
   const port = envService.getPort();
   const server = envService.getServer();
