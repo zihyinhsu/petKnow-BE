@@ -1,13 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigService } from '@nestjs/config';
 import { EnvService } from './env.service';
+import { ConfigModule } from '@nestjs/config';
 
 describe('EnvService', () => {
   let service: EnvService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [EnvService, ConfigService],
+      imports: [
+        ConfigModule.forRoot({
+          envFilePath: '.env',
+          isGlobal: true,
+        }),
+      ],
+      providers: [EnvService],
     }).compile();
 
     service = module.get<EnvService>(EnvService);
