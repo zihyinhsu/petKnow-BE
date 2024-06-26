@@ -100,7 +100,7 @@ export class EnvService {
   getPatKomDB(): string {
     const mongoDB_Url = this.configService.get<string>(
       'MONGODB_URL',
-      'mongodb://127.0.0.1:27017/petknow-be',
+      'mongodb://127.0.0.1:27017/pet-know',
     );
     if (!mongoDB_Url) {
       // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
