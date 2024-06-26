@@ -19,14 +19,6 @@ interface IUser {
   password: string;
   /** 講師簡介 */
   lecturerBio?: string;
-  /** 是否凍結 */
-  isFrozen?: boolean;
-  /** 是否啟用通知 */
-  isNotificationEnabled?: boolean;
-  /** 是否啟用隱私 */
-  isPrivacyEnabled?: boolean;
-  /** 最後登入時間 */
-  lastLoginTime?: Date;
   /** 創建時間 */
   createdAt?: Date;
   /** 更新時間 */
@@ -41,7 +33,6 @@ interface IUser {
 @Schema({ timestamps: true })
 class User extends Document implements IUser {
   /** 身份 Id */
-  // UPDATE:  @Prop({ type: [String], required: true }) // 暫時不做身分權限
   @Prop({ type: [String], enum: Role, default: [Role.STUDENT] })
   role: Role[];
 
@@ -61,21 +52,9 @@ class User extends Document implements IUser {
   @Prop({ type: String, required: true, maxlength: 255 })
   password: string;
 
-  /** 講師簡介 */
+  /** 個人簡介 */
   @Prop({ type: String, maxlength: 5000 })
   lecturerBio: string;
-
-  /** 是否凍結 */
-  @Prop({ type: Boolean, required: true, default: true })
-  isFrozen: boolean;
-
-  /** 是否啟用通知 */
-  @Prop({ type: Boolean, required: true, default: true })
-  isNotificationEnabled: boolean;
-
-  /** 是否啟用隱私 */
-  @Prop({ type: Boolean, required: true, default: true })
-  isPrivacyEnabled: boolean;
 
   /** 創建時間 */
   @Prop({ type: Date, default: Date.now })
@@ -84,10 +63,6 @@ class User extends Document implements IUser {
   /** 更新時間 */
   @Prop({ type: Date, default: Date.now })
   updatedAt: Date;
-
-  /** 最後登入時間 */
-  @Prop({ type: Date, default: null })
-  lastLoginTime: Date;
 }
 //#endregion User [ 使用者資料表 ] End
 
