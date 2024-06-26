@@ -18,7 +18,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const envService = new EnvService();
   const swaggerService = new SwaggerService();
-  const port = envService.getPort();
+  const port = await envService.getPort();
   const server = envService.getServer();
 
   swaggerService.initial(app);
@@ -38,6 +38,7 @@ async function bootstrap() {
   app.enableCors(); // 允許跨域
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector))); //全域攔截器，攔截掉敏感資料
   app.useGlobalInterceptors(new ResponseInterceptor()); //全域攔截器，制定統一的 response
+
   await app.listen(port);
   Logger.log(`🚀 Application is running on: ${server}:${port}/${swaggerService.swaggerPrefix}`);
 }

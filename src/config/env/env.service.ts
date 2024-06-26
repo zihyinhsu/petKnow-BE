@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import detect from 'detect-port';
 
 //#region EnvService [ 環境變數服務器 ]
 /**
@@ -37,11 +38,13 @@ export class EnvService {
   /**
    *  讀取 埠
    */
-  getPort(): string {
-    const port = this.configService.get<string>('PORT', '8000');
-    if (!port) {
-      // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
-      throw new Error('在環境變量中找不到 PORT');
+  async getPort(): Promise<number> {
+    const defaultPort = parseInt(this.configService.get<string>('PORT', '8000'));
+
+    const port = await detect(defaultPort);
+
+    if (port !== defaultPort) {
+      Logger.warn(`Port ${defaultPort} is already in use. Using port ${port} instead.`);
     }
 
     return port;
