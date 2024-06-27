@@ -47,10 +47,6 @@ interface ICourse {
   discountDate?: Date;
   /** 上架日期 */
   shelfDate?: Date;
-  /** 創建時間 */
-  createdAt: Date;
-  /** 更新時間 */
-  updatedAt: Date;
 }
 //#endregion ICourse [ 課程資料結構 ] End
 
@@ -143,14 +139,6 @@ class Course extends Document implements ICourse {
   /** 上架日期 */
   @Prop({ type: Date, default: null })
   shelfDate?: Date;
-
-  /** 創建時間 */
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  /** 更新時間 */
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 //#endregion Course [ 課程資料表 ] End
 

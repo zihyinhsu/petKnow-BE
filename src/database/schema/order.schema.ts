@@ -38,10 +38,6 @@ interface IOrder {
   timeStamp: number;
   /** 是否付款 */
   isPayment?: boolean;
-  /** 創建時間 */
-  createdAt?: Date;
-  /** 更新時間 */
-  updatedAt?: Date;
 }
 //#endregion IOrder [ 訂單資料結構 ] End
 
@@ -124,14 +120,6 @@ class Order extends Document implements IOrder {
   /** 是否付款 */
   @Prop({ type: Boolean, default: false })
   isPayment?: boolean;
-
-  /** 創建時間 */
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  /** 更新時間 */
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 //#endregion Order [ 訂單資料表 ] End
 

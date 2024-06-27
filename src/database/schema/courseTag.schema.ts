@@ -8,10 +8,6 @@ import { Document } from 'mongoose';
 interface ICourseTag {
   /** 標籤名稱 */
   name: string;
-  /** 創建時間 */
-  createdAt?: Date;
-  /** 更新時間 */
-  updatedAt?: Date;
 }
 //#endregion ICourseTag [ 課程標籤資料結構 ] End
 
@@ -28,14 +24,6 @@ class CourseTag extends Document implements ICourseTag {
     required: [true, '標籤未填寫'],
   })
   name: string;
-
-  /** 創建時間 */
-  @Prop({ type: Date, default: Date.now })
-  createdAt?: Date;
-
-  /** 更新時間 */
-  @Prop({ type: Date, default: Date.now })
-  updatedAt?: Date;
 }
 //#endregion CourseTag [ 課程標籤資料表 ] End
 

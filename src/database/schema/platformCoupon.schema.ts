@@ -19,10 +19,6 @@ interface IPlatformCoupon {
   startDate: Date;
   /** 結束日期 */
   endDate: Date;
-  /** 創建時間 */
-  createdAt?: Date;
-  /** 更新時間 */
-  updatedAt?: Date;
 }
 //#endregion IPlatformCoupon [ 平台優惠卷資料結構 ] End
 
@@ -55,14 +51,6 @@ class PlatformCoupon extends Document implements IPlatformCoupon {
   /** 結束日期 */
   @Prop({ type: Date, required: true })
   endDate: Date;
-
-  /** 創建時間 */
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  /** 更新時間 */
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 //#endregion PlatformCoupon [ 平台優惠卷資料表 ] End
 

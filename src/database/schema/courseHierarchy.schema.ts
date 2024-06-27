@@ -86,10 +86,6 @@ interface ICourseHierarchy {
   discountDate?: Date;
   /** 上架日期 */
   shelfDate?: Date;
-  /** 創建時間 */
-  createdAt: Date;
-  /** 更新時間 */
-  updatedAt: Date;
   /** 章節 */
   chapters: IChapter[];
 }
@@ -299,14 +295,6 @@ class CourseHierarchy extends Document implements ICourseHierarchy {
   /** 上架日期 */
   @Prop({ type: Date, default: null })
   shelfDate?: Date;
-
-  /** 創建時間 */
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  /** 更新時間 */
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 
   /** 章節 */
   @Prop({ type: [ChapterSchema], default: [] })

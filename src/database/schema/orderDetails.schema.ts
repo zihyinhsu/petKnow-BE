@@ -20,10 +20,6 @@ interface IOrderDetail {
   discountPrice?: number;
   /** 是否免費 */
   isFree?: boolean;
-  /** 創建時間 */
-  createdAt?: Date;
-  /** 更新時間 */
-  updatedAt?: Date;
 }
 //#endregion IOrderDetail [ 訂單詳情資料結構 ] End
 
@@ -67,14 +63,6 @@ class OrderDetail extends Document implements IOrderDetail {
   /** 是否免費 */
   @Prop({ type: Boolean })
   isFree?: boolean;
-
-  /** 創建時間 */
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  /** 更新時間 */
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 //#endregion OrderDetail [ 訂單詳情資料表 ] End
 

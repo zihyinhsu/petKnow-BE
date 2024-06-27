@@ -19,10 +19,6 @@ interface IUser {
   password: string;
   /** 講師簡介 */
   lecturerBio?: string;
-  /** 創建時間 */
-  createdAt?: Date;
-  /** 更新時間 */
-  updatedAt?: Date;
 }
 //#endregion User [ 使用者資料結構 ] End
 
@@ -55,14 +51,6 @@ class User extends Document implements IUser {
   /** 個人簡介 */
   @Prop({ type: String, maxlength: 5000 })
   lecturerBio: string;
-
-  /** 創建時間 */
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  /** 更新時間 */
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 //#endregion User [ 使用者資料表 ] End
 

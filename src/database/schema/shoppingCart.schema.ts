@@ -13,10 +13,6 @@ interface IShoppingCart {
   courseIds: string[];
   /** 優惠卷代碼 */
   couponCode?: string;
-  /** 創建時間 */
-  createdAt?: Date;
-  /** 更新時間 */
-  updatedAt?: Date;
 }
 //#endregion IShoppingCart [ 購物車資料結構 ] End
 
@@ -43,14 +39,6 @@ class ShoppingCart extends Document implements IShoppingCart {
   /** 優惠卷代碼 */
   @Prop({ type: String, maxlength: 20, default: '' })
   couponCode: string;
-
-  /** 創建時間 */
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  /** 更新時間 */
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 //#endregion ShoppingCart [ 購物車資料表 ] End
 
