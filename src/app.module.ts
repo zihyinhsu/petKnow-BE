@@ -6,9 +6,10 @@ import { DatabaseModule } from './database/database.module';
 import { RoleGuard } from '@api/users/auth/role.guard';
 import { ApiModule } from './api/api.module';
 import { Api2Module } from './api2/api2.module';
+import { ApplicationModule } from './application/application.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, ApiModule, Api2Module],
+  imports: [ConfigModule, DatabaseModule, ApiModule, Api2Module, ApplicationModule],
   controllers: [AppController],
   providers: [AppService, ClassSerializerInterceptor, RoleGuard],
 })

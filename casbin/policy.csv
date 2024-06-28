@@ -3,7 +3,7 @@ p, teacher, /user/*, *
 p, teacher, /coupon*, *
 p, teacher, /coupon/*, *
 
-p, student, /backstage/*
+p, student, /backstage/*, *
 p, student, /courses, read
 p, student, /user/*, *
 p, student, /cart, *

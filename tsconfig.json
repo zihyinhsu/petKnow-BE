@@ -12,6 +12,7 @@
     "baseUrl": "./src",
     "paths": {
       "@api/*": ["api/*"],
+      "@app/*": ["application/*"],
       "@config/*": ["config/*"],
       "@data/*": ["database/*"]
     },

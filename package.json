@@ -96,6 +96,7 @@
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^@api/(.*)$": "<rootDir>/api/$1",
+      "^@app/(.*)$": "<rootDir>/application/$1",
       "^@config/(.*)$": "<rootDir>/config/$1",
       "^@data/(.*)$": "<rootDir>/database/$1"
     }

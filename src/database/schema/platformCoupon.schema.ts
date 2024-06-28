@@ -19,6 +19,10 @@ interface IPlatformCoupon {
   startDate: Date;
   /** 結束日期 */
   endDate: Date;
+  /** 創建時間 */
+  createdAt?: Date;
+  /** 更新時間 */
+  updatedAt?: Date;
 }
 //#endregion IPlatformCoupon [ 平台優惠卷資料結構 ] End
 

@@ -10,6 +10,7 @@ import { AuthModule } from './users/auth/auth.module';
 import { join } from 'path';
 import { BackstageModule } from './backstage/backstage.module';
 import { FakeInformationModule } from './fake-information/fake-information.module';
+import { CourseTagModule } from './course-tag/course-tag.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { FakeInformationModule } from './fake-information/fake-information.modul
     OrderModule,
     BackstageModule,
     FakeInformationModule,
+    CourseTagModule,
   ],
   controllers: [],
   providers: [],

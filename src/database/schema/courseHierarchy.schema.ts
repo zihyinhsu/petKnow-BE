@@ -86,6 +86,10 @@ interface ICourseHierarchy {
   discountDate?: Date;
   /** 上架日期 */
   shelfDate?: Date;
+  /** 創建時間 */
+  createdAt?: Date;
+  /** 更新時間 */
+  updatedAt?: Date;
   /** 章節 */
   chapters: IChapter[];
 }
