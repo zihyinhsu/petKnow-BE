@@ -14,7 +14,8 @@
       "@api/*": ["api/*"],
       "@app/*": ["application/*"],
       "@config/*": ["config/*"],
-      "@data/*": ["database/*"]
+      "@data/*": ["database/*"],
+      "@pipes/*": ["pipes/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

@@ -5,8 +5,10 @@ import { CourseTagFindNamesDTO } from './input/find-name-course-tag.dto';
 import { CreateCourseTagDTO } from './input/create-course-tag.dto';
 import { CourseTag } from '@data/schema/courseTag.schema';
 import { UpdateCourseTagDTO } from './input/update-course-tag.dto';
+import { ValidateObjectIdPipe } from '@pipes/validate.pipe';
 
 // TODO: 是否需要加上身分權限的驗證
+
 @ApiTags('標籤資料表')
 @Controller('course-tag')
 export class CourseTagController {
@@ -29,14 +31,14 @@ export class CourseTagController {
 
   @ApiOperation({ summary: '標籤資料表 - 查詢特定標籤' })
   @Get(':id')
-  async getCourseTagById(@Param('id') id: string): Promise<CourseTag> {
+  async getCourseTagById(@Param('id', ValidateObjectIdPipe) id: string): Promise<CourseTag> {
     return this.courseTagService.findById(id);
   }
 
   @ApiOperation({ summary: '標籤資料表 - 更新標籤' })
   @Put(':id')
   async updateCourseTag(
-    @Param('id') id: string,
+    @Param('id', ValidateObjectIdPipe) id: string,
     @Body() updateDto: UpdateCourseTagDTO,
   ): Promise<CourseTag> {
     return this.courseTagService.update(id, updateDto);
@@ -44,7 +46,7 @@ export class CourseTagController {
 
   @ApiOperation({ summary: '標籤資料表 - 刪除標籤' })
   @Delete(':id')
-  async deleteCourseTag(@Param('id') id: string): Promise<boolean> {
+  async deleteCourseTag(@Param('id', ValidateObjectIdPipe) id: string): Promise<boolean> {
     return this.courseTagService.delete(id);
   }
 }

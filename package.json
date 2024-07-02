@@ -98,7 +98,8 @@
       "^@api/(.*)$": "<rootDir>/api/$1",
       "^@app/(.*)$": "<rootDir>/application/$1",
       "^@config/(.*)$": "<rootDir>/config/$1",
-      "^@data/(.*)$": "<rootDir>/database/$1"
+      "^@data/(.*)$": "<rootDir>/database/$1",
+      "^@pipes/(.*)$": "<rootDir>/pipes/$1"
     }
   },
   "engines": {
