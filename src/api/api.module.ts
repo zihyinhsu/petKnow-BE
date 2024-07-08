@@ -11,6 +11,7 @@ import { join } from 'path';
 import { BackstageModule } from './backstage/backstage.module';
 import { FakeInformationModule } from './fake-information/fake-information.module';
 import { CourseTagModule } from './course-tag/course-tag.module';
+import { GoldFlowModule } from './gold-flow/gold-flow.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { CourseTagModule } from './course-tag/course-tag.module';
     BackstageModule,
     FakeInformationModule,
     CourseTagModule,
+    GoldFlowModule,
   ],
   controllers: [],
   providers: [],

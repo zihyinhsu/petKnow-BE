@@ -101,18 +101,50 @@ export class EnvService {
    *  讀取 PatKom 資料庫
    */
   getPatKomDB(): string {
-    const mongoDB_Url = this.configService.get<string>(
+    const mongoDBUrl = this.configService.get<string>(
       'MONGODB_URL',
       'mongodb://127.0.0.1:27017/pet-know',
     );
-    if (!mongoDB_Url) {
+    if (!mongoDBUrl) {
       // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
       throw new Error('在環境變量中找不到 PetKnow 數據庫連接字符串');
     }
 
-    return mongoDB_Url;
+    return mongoDBUrl;
   }
   //#endregion getPatKomDB [ 讀取 PatKom 資料庫 ] End
+
+  //#region getCoverUrl [ 讀取 封面網址 ]
+  /**
+   *  讀取 封面網址
+   */
+  getCoverUrl(): string {
+    const coverUrl = this.configService.get<string>('COVER_URL');
+
+    if (!coverUrl) {
+      // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
+      throw new Error('在環境變量中找不到 COVER_URL 數據庫連接字符串');
+    }
+
+    return coverUrl;
+  }
+  //#endregion getCoverUrl [ 讀取 封面網址 ] End
+
+  //#region getCoverParamsUrl [ 讀取 封面參數網址 ]
+  /**
+   *  讀取 封面參數網址
+   */
+  getCoverParamsUrl(): string {
+    const coverParamsUrl = this.configService.get<string>('COVER_PARAMS_URL');
+
+    if (!coverParamsUrl) {
+      // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
+      throw new Error('在環境變量中找不到 COVER_PARAMS_URL 數據庫連接字符串');
+    }
+
+    return coverParamsUrl;
+  }
+  //#endregion getCoverParamsUrl [ 讀取 封面參數網址 ] End
 
   //#region getJwtSecret [ 讀取 Jwt 金鑰 ]
   /**
@@ -169,5 +201,37 @@ export class EnvService {
     return googleUrl;
   }
   //#endregion getGoogleUrl [ 讀取 google 網址 ] End
+
+  //#region getMerchantId [ 讀取 金流商家編號 ]
+  /**
+   *  讀取 金流商家編號
+   */
+  getMerchantId(): string {
+    const merchantId = this.configService.get<string>('MERCHANT_ID');
+
+    if (!merchantId) {
+      // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
+      throw new Error('在環境變量中找不到 MERCHANT_ID 數據庫連接字符串');
+    }
+
+    return merchantId;
+  }
+  //#endregion getMerchantId [ 讀取 金流商家編號 ] End
+
+  //#region getMerchantId [ 讀取 金流商家編號 ]
+  /**
+   *  讀取 金流商家編號
+   */
+  getVersion(): string {
+    const version = this.configService.get<string>('VERSION');
+
+    if (!version) {
+      // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
+      throw new Error('在環境變量中找不到 VERSION 數據庫連接字符串');
+    }
+
+    return version;
+  }
+  //#endregion getMerchantId [ 讀取 金流商家編號 ] End
 }
 //#endregion EnvService [ 環境變數服務器 ] End

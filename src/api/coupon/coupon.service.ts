@@ -75,7 +75,7 @@ export class CouponService {
   }
 
   // 刪除優惠券
-  async remove(id): Promise<Coupon> {
+  async remove(id: string): Promise<Coupon> {
     const course = await this.repo.findOneBy({
       _id: new ObjectId(id),
     });

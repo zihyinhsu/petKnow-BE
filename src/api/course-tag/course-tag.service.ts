@@ -38,7 +38,7 @@ export class CourseTagService {
   }
 
   async findById(id: string): Promise<CourseTag> {
-    return this.courseTagModel.findById(id).exec();
+    return this.courseTagModel.findById(id).lean().exec();
   }
 
   async update(id: string, updateDto: UpdateCourseTagDTO): Promise<CourseTag> {
