@@ -5,7 +5,7 @@ import { CourseTagFindNamesDTO } from './input/find-name-course-tag.dto';
 import { CreateCourseTagDTO } from './input/create-course-tag.dto';
 import { CourseTag } from '@data/schema/courseTag.schema';
 import { UpdateCourseTagDTO } from './input/update-course-tag.dto';
-import { ValidateObjectIdPipe } from '@pipes/validate.pipe';
+import { ValidateObjectIdPipe } from 'core/pipes/validate.pipe';
 
 // TODO: 是否需要加上身分權限的驗證
 

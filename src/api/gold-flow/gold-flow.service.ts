@@ -3,8 +3,9 @@ import { PlatformCoupon } from '@data/schema/platformCoupon.schema';
 import { ShoppingCart } from '@data/schema/shoppingCart.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { isValidObjectId, Model, Types } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
+import * as crypto from 'crypto';
 import {
   IGetCart,
   ICheckCartCoursesReturn,
@@ -16,6 +17,8 @@ import {
 } from './types/goldFlow.type';
 import { EnvService } from '@config/env/env.service';
 import { LevelEnum } from '@data/enum/level.enum';
+import { Order } from '@data/schema/order.schema';
+import { OrderDetail } from '@data/schema/orderDetails.schema';
 
 @Injectable()
 export class GoldFlowService {
@@ -23,6 +26,14 @@ export class GoldFlowService {
   private readonly coverParamsUrl;
   private readonly merchantId;
   private readonly version;
+  private readonly respondType;
+  private readonly goldFlowHashKey;
+  private readonly goldFlowHashIv;
+  private readonly goldFlowAlgorithm;
+  private readonly orderSalt;
+  private readonly orderHashKey;
+  private readonly orderHashIv;
+  private readonly orderAlgorithm;
 
   constructor(
     @InjectModel(CourseHierarchy.name)
@@ -31,12 +42,26 @@ export class GoldFlowService {
     private readonly shoppingCartModel: Model<ShoppingCart>,
     @InjectModel(PlatformCoupon.name)
     private readonly platformCouponModel: Model<PlatformCoupon>,
+    @InjectModel(Order.name)
+    private readonly orderModel: Model<Order>,
+    @InjectModel(OrderDetail.name)
+    private readonly orderDetailModel: Model<OrderDetail>,
     private readonly envService: EnvService,
   ) {
     this.coverUrl = this.envService.getCoverUrl();
     this.coverParamsUrl = this.envService.getCoverParamsUrl();
     this.merchantId = this.envService.getMerchantId();
+    this.respondType = this.envService.getRespondType();
     this.version = this.envService.getVersion();
+
+    this.goldFlowHashKey = this.envService.getGoldFlowHashKey();
+    this.goldFlowHashIv = this.envService.getGoldFlowHashIv();
+    this.goldFlowAlgorithm = this.envService.getGoldFlowAlgorithm();
+
+    this.orderSalt = this.envService.getOrderSalt();
+    this.orderHashKey = this.envService.getOrderHashKey();
+    this.orderHashIv = this.envService.getOrderHashIv();
+    this.orderAlgorithm = this.envService.getOrderAlgorithm();
   }
 
   //#region saveOrUpdateUserCartCourseAsync [ 使用者 新增或更新購物車 - 課程資料 ]
@@ -676,20 +701,24 @@ export class GoldFlowService {
   ) {
     const aesEncrypted = this.createMpgAesEncrypt(
       neweBpay,
-      goldFlowHashKey,
-      goldFlowHashIv,
-      goldFlowalgorithm,
+      this.goldFlowHashKey,
+      this.goldFlowHashIv,
+      this.goldFlowAlgorithm,
     );
 
-    const shaEncrypted = this.createMpgShaEncrypt(aesEncrypted, goldFlowHashKey, goldFlowHashIv);
+    const shaEncrypted = this.createMpgShaEncrypt(
+      aesEncrypted,
+      this.goldFlowHashKey,
+      this.goldFlowHashIv,
+    );
 
     order.tradeInfo = aesEncrypted;
     order.tradeSha = shaEncrypted;
 
     if (!aesEncrypted || !shaEncrypted) return 0;
 
-    const newOrder = await Order.create(order);
-    const _id = newOrder._id;
+    const newOrder = await this.orderModel.create(order);
+    const _id = newOrder._id as Types.ObjectId;
 
     if (!_id) return 1;
 
@@ -699,10 +728,10 @@ export class GoldFlowService {
 
     const _idEncrypt = this.orderIdAesEncrypt(
       _id.toString(),
-      orderHasKey,
-      orderHasIv,
-      orderSalt,
-      orderalgorithm,
+      this.orderHashKey,
+      this.orderHashIv,
+      this.orderSalt,
+      this.orderAlgorithm,
     );
 
     return {
@@ -726,7 +755,7 @@ export class GoldFlowService {
       };
     });
 
-    const newOrderDetails = await OrderDetails.insertMany(orderDetails);
+    const newOrderDetails = await this.orderDetailModel.insertMany(orderDetails);
 
     return newOrderDetails;
   }
@@ -735,13 +764,19 @@ export class GoldFlowService {
   //#region postCheckOrderAsync [ 確認訂單資料 ]
   /** 確認訂單資料 */
   async postCheckOrderAsync(userId: Types.ObjectId, orderId: string) {
-    const _id = this.orderIdAesDecrypt(orderId, orderHasKey, orderHasIv, orderSalt, orderalgorithm);
+    const _id = this.orderIdAesDecrypt(
+      orderId,
+      this.orderHashKey,
+      this.orderHashIv,
+      this.orderSalt,
+      this.orderAlgorithm,
+    );
 
     const isValidId = isValidObjectId(_id);
 
     if (!isValidId) return 0;
 
-    const order = await Order.findOne(
+    const order = await this.orderModel.findOne(
       { _id: _id, user: userId },
       {
         _id: 1,
@@ -811,9 +846,9 @@ export class GoldFlowService {
    */
   genDataChain(order: IOrderParams) {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI
-    return `MerchantID=${merchantId}&RespondType=${respondType}&TimeStamp=${
+    return `MerchantID=${this.merchantId}&RespondType=${this.respondType}&TimeStamp=${
       order.timeStamp
-    }&Version=${version}&MerchantOrderNo=${order.merchantOrderNo}&Amt=${
+    }&Version=${this.version}&MerchantOrderNo=${order.merchantOrderNo}&Amt=${
       order.amt
     }&ItemDesc=${encodeURIComponent(order.itemDesc)}&Email=${encodeURIComponent(order.email)}`;
   }
@@ -902,13 +937,13 @@ export class GoldFlowService {
   async postNotifyAsync(orderNotify: any) {
     const info = this.createMpgAesDecrypt(
       orderNotify.TradeInfo,
-      goldFlowHashKey,
-      goldFlowHashIv,
-      goldFlowalgorithm,
+      this.goldFlowHashKey,
+      this.goldFlowHashIv,
+      this.goldFlowAlgorithm,
     );
     const merchantOrderNo = info.Result.MerchantOrderNo;
 
-    const putOrder = await Order.findOneAndUpdate(
+    const putOrder = await this.orderModel.findOneAndUpdate(
       { merchantOrderNo: merchantOrderNo },
       {
         $set: { isPayment: true, updatedAt: new Date() },

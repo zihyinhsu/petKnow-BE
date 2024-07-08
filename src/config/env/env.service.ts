@@ -194,44 +194,141 @@ export class EnvService {
    */
   getGoogleUrl(): string {
     const googleUrl = this.configService.get<string>('OAUTH_GOOGLE_REDIRECT_URL');
-    if (!googleUrl) {
-      throw new Error('在環境變量中找不到 OAUTH_GOOGLE_REDIRECT_URL');
-    }
+    if (!googleUrl) throw new Error('在環境變量中找不到 OAUTH_GOOGLE_REDIRECT_URL');
 
     return googleUrl;
   }
   //#endregion getGoogleUrl [ 讀取 google 網址 ] End
 
-  //#region getMerchantId [ 讀取 金流商家編號 ]
+  //#region getMerchantId [ 讀取 金流-商家編號 ]
   /**
-   *  讀取 金流商家編號
+   *  讀取 金流-商家編號
    */
   getMerchantId(): string {
     const merchantId = this.configService.get<string>('MERCHANT_ID');
 
-    if (!merchantId) {
-      // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
-      throw new Error('在環境變量中找不到 MERCHANT_ID 數據庫連接字符串');
-    }
+    if (!merchantId) throw new Error('在環境變量中找不到 MERCHANT_ID 數據庫連接字符串');
 
     return merchantId;
   }
-  //#endregion getMerchantId [ 讀取 金流商家編號 ] End
+  //#endregion getMerchantId [ 讀取 金流-商家編號 ] End
 
-  //#region getMerchantId [ 讀取 金流商家編號 ]
+  //#region getRepondType [ 讀取 金流-商家資料類型 ]
   /**
-   *  讀取 金流商家編號
+   *  讀取 金流-商家資料類型
+   */
+  getRespondType(): string {
+    const respondType = this.configService.get<string>('REsPOND_TYPE');
+
+    if (!respondType) throw new Error('在環境變量中找不到 REsPOND_TYPE 數據庫連接字符串');
+
+    return respondType;
+  }
+  //#endregion getRepondType [ 讀取 金流-商家資料類型 ] End
+
+  //#region getVersion [ 讀取 金流-商家版本號 ]
+  /**
+   *  讀取 金流-商家版本號
    */
   getVersion(): string {
     const version = this.configService.get<string>('VERSION');
 
-    if (!version) {
-      // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
-      throw new Error('在環境變量中找不到 VERSION 數據庫連接字符串');
-    }
+    if (!version) throw new Error('在環境變量中找不到 VERSION 數據庫連接字符串');
 
     return version;
   }
-  //#endregion getMerchantId [ 讀取 金流商家編號 ] End
+  //#endregion getVersion [ 讀取 金流-商家版本號 ] End
+
+  //#region getGoldFlowHashKey [ 讀取 金流-Key ]
+  /**
+   *  讀取 金流-Key
+   */
+  getGoldFlowHashKey(): string {
+    const goldFlowHashKey = this.configService.get<string>('GOLD_FLOW_HASH_KEY');
+
+    if (!goldFlowHashKey) throw new Error('在環境變量中找不到 GOLD_FLOW_HASH_KEY 數據庫連接字符串');
+
+    return goldFlowHashKey;
+  }
+  //#endregion getGoldFlowHashKey [ 讀取 金流-Key ] End
+
+  //#region getGoldFlowHashIv [ 讀取 金流-Iv ]
+  /**
+   *  讀取 金流-Iv
+   */
+  getGoldFlowHashIv(): string {
+    const goldFlowHashIv = this.configService.get<string>('GOLD_FLOW_HASH_IV');
+
+    if (!goldFlowHashIv) throw new Error('在環境變量中找不到 GOLD_FLOW_HASH_IV 數據庫連接字符串');
+
+    return goldFlowHashIv;
+  }
+  //#endregion getGoldFlowHashIv [ 讀取 金流-Iv ] End
+
+  //#region getGoldFlowAlgorithm [ 讀取 金流-演算法 ]
+  /**
+   *  讀取 金流-演算法
+   */
+  getGoldFlowAlgorithm(): string {
+    const goldFlowAlgorithm = this.configService.get<string>('GOLD_FLOW_ALGORITHM');
+
+    if (!goldFlowAlgorithm)
+      throw new Error('在環境變量中找不到 GOLD_FLOW_ALGORITHM 數據庫連接字符串');
+
+    return goldFlowAlgorithm;
+  }
+  //#endregion getGoldFlowAlgorithm [ 讀取 金流-演算法 ] End
+
+  //#region getOrderSalt [ 讀取 訂單-加鹽 ]
+  /**
+   *  讀取 訂單-加鹽
+   */
+  getOrderSalt(): string {
+    const orderSalt = this.configService.get<string>('ORDER_SALT');
+
+    if (!orderSalt) throw new Error('在環境變量中找不到 ORDER_SALT 數據庫連接字符串');
+
+    return orderSalt;
+  }
+  //#endregion getOrderSalt [ 讀取 訂單-加鹽 ] End
+
+  //#region getOrderHashKey [ 讀取 訂單-Key ]
+  /**
+   *  讀取 訂單-Key
+   */
+  getOrderHashKey(): string {
+    const orderHashKey = this.configService.get<string>('ORDER_HASH_KEY');
+
+    if (!orderHashKey) throw new Error('在環境變量中找不到 ORDER_HASH_KEY 數據庫連接字符串');
+
+    return orderHashKey;
+  }
+  //#endregion getOrderHashKey [ 讀取 訂單-Key ] End
+
+  //#region getOrderHashIv [ 讀取 訂單-Iv ]
+  /**
+   *  讀取 訂單-Iv
+   */
+  getOrderHashIv(): string {
+    const orderHashKey = this.configService.get<string>('ORDER_HASH_IV');
+
+    if (!orderHashKey) throw new Error('在環境變量中找不到 ORDER_HASH_IV 數據庫連接字符串');
+
+    return orderHashKey;
+  }
+  //#endregion getOrderHashIv [ 讀取 訂單-Iv ] End
+
+  //#region getOrderHashIv [ 讀取 訂單-Iv ]
+  /**
+   *  讀取 訂單-Iv
+   */
+  getOrderAlgorithm(): string {
+    const orderAlgorithm = this.configService.get<string>('ORDER_ALGORITHM');
+
+    if (!orderAlgorithm) throw new Error('在環境變量中找不到 ORDER_ALGORITHM 數據庫連接字符串');
+
+    return orderAlgorithm;
+  }
+  //#endregion getOrderHashIv [ 讀取 訂單-Iv ] End
 }
 //#endregion EnvService [ 環境變數服務器 ] End
