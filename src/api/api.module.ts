@@ -6,12 +6,13 @@ import { CoursesModule } from './courses/courses.module';
 import { CartModule } from './cart/cart.module';
 import { CouponModule } from './coupon/coupon.module';
 import { OrderModule } from './order/order.module';
-import { AuthModule } from './users/auth/auth.module';
-import { join } from 'path';
+// import { AuthModule } from './users/auth/auth.module';
+// import { join } from 'path';
 import { BackstageModule } from './backstage/backstage.module';
 import { FakeInformationModule } from './fake-information/fake-information.module';
 import { CourseTagModule } from './course-tag/course-tag.module';
 import { GoldFlowModule } from './gold-flow/gold-flow.module';
+// import { AuthModule } from 'api2/user/user.module';
 
 @Module({
   imports: [
@@ -31,11 +32,11 @@ import { GoldFlowModule } from './gold-flow/gold-flow.module';
     }),
     CoursesModule,
     CartModule,
-    AuthModule.register({
-      global: true,
-      modelPath: join(process.cwd(), 'casbin/model.conf'),
-      policyAdapter: join(process.cwd(), 'casbin/policy.csv'),
-    }),
+    // AuthModule.register({
+    //   global: true,
+    //   modelPath: join(process.cwd(), 'casbin/model.conf'),
+    //   policyAdapter: join(process.cwd(), 'casbin/policy.csv'),
+    // }),
     CouponModule,
     OrderModule,
     BackstageModule,

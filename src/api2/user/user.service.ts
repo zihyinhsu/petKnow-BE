@@ -1,15 +1,23 @@
 import { User } from '@data/schema/user.schema';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { ObjectId } from 'mongodb';
+import { Model, Types } from 'mongoose';
+// import { ObjectId } from 'mongodb';
 import * as bcrypt from 'bcrypt';
 import { Role } from '@data/enum/role.enum';
 import { CreateUserDto } from './dto/create-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
+import { JwtService } from '@nestjs/jwt';
+import { AuthAction, CASBIN_ENFORCER } from './rbac';
+import { Enforcer } from 'casbin';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
+  constructor(
+    @Inject(CASBIN_ENFORCER) private readonly enforcer: Enforcer,
+    @InjectModel(User.name) private readonly userModel: Model<User>,
+    private jwtService: JwtService,
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto);
@@ -33,12 +41,52 @@ export class UserService {
     // 如：this.repo.save（{email,password}） 就不會觸發 entity listener
     return createdUser.save();
   }
-
-  async findOne(query): Promise<User> {
-    if (!query) return null;
+  // 登入
+  async login(userData: LoginUserDto) {
+    const { email, password } = userData;
+    const ExitUser = await this.findOne(email);
+    let token = '';
+    if (ExitUser) {
+      if (password) {
+        const { password: hashedPassword } = ExitUser;
+        // 確認輸入的密碼是否正確
+        const pass = await bcrypt.compare(password, hashedPassword);
+        if (pass) {
+          token = await this.jwtService.sign(
+            {
+              sub: ExitUser._id,
+              username: ExitUser.name,
+              role: ExitUser.role,
+            },
+            {
+              secret: process.env.JWT_SECRET,
+            },
+          );
+        }
+      }
+    }
+    return { token };
+  }
+  async findOne(email?: string, id?: string): Promise<User> {
+    if (!email && !id) return null;
     const user = await this.userModel.findOne({
-      where: query.includes('@') ? { email: query } : { _id: new ObjectId(query) },
+      $or: [{ email: email }, { _id: new Types.ObjectId(id) }],
     });
     return user;
+  }
+
+  // 判斷是否有權限
+  checkPermission(sub: string, obj: string, act: AuthAction) {
+    return this.enforcer.enforce(sub, obj, act);
+  }
+
+  mappingAction(method: string) {
+    const table: Record<string, AuthAction> = {
+      POST: AuthAction.CREATE,
+      GET: AuthAction.READ,
+      PATCH: AuthAction.UPDATE,
+      DELETE: AuthAction.DELETE,
+    };
+    return table[method.toUpperCase()] || AuthAction.READ;
   }
 }

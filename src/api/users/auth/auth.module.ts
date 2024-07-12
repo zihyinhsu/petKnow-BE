@@ -1,8 +1,12 @@
 import { UsersService } from '../users.service';
-import { DynamicModule, Module, Provider } from '@nestjs/common';
-import { CASBIN_ENFORCER, RegisterOptions } from './rbac';
+import {
+  // DynamicModule,
+  Module,
+  // Provider
+} from '@nestjs/common';
+// import { CASBIN_ENFORCER, RegisterOptions } from '../../../api2/user/rbac';
 import { AuthService } from './auth.service';
-import { newEnforcer } from 'casbin';
+// import { newEnforcer } from 'casbin';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user.entity';
 import { UsersModule } from '../users.module';
@@ -12,7 +16,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { GoogleOauthStrategy } from './google.strategy';
-import { Api2Module } from 'api2/api2.module';
+// import { Api2Module } from 'api2/api2.module';
 
 @Module({
   imports: [
@@ -32,27 +36,28 @@ import { Api2Module } from 'api2/api2.module';
     }),
     TypeOrmModule.forFeature([User]),
     UsersModule,
-    Api2Module,
+    // Api2Module,
   ],
   controllers: [AuthController],
   providers: [UsersService, AuthService, JwtService, JwtStrategy, GoogleOauthStrategy],
   exports: [PassportModule, JwtStrategy, AuthService],
 })
-export class AuthModule {
-  static register(options: RegisterOptions): DynamicModule {
-    const { modelPath, policyAdapter, global } = options;
-    const enforcer: Provider = {
-      provide: CASBIN_ENFORCER,
-      useFactory: () => {
-        return newEnforcer(modelPath, policyAdapter);
-      },
-    };
+export class AuthsModule {}
+// export class AuthModule {
+//   static register(options: RegisterOptions): DynamicModule {
+//     const { modelPath, policyAdapter, global } = options;
+//     const enforcer: Provider = {
+//       provide: CASBIN_ENFORCER,
+//       useFactory: () => {
+//         return newEnforcer(modelPath, policyAdapter);
+//       },
+//     };
 
-    return {
-      global,
-      module: AuthModule,
-      providers: [enforcer, AuthService],
-      exports: [AuthService],
-    };
-  }
-}
+//     return {
+//       global,
+//       module: AuthModule,
+//       providers: [enforcer, AuthService],
+//       exports: [AuthService],
+//     };
+//   }
+// }

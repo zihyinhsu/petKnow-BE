@@ -9,7 +9,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Role } from '../../../api2/user/rbac';
+import { Role } from '../rbac';
 
 export class userDto {
   @ApiProperty()

@@ -1,22 +1,29 @@
 import { UsersService } from '../users.service';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  // Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../user.entity';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
+// import { JwtService } from '@nestjs/jwt';
 import { userDto } from '../dto/user.dto';
-import { LoginUserDto } from '../dto/login-user.dto';
-import { AuthAction, CASBIN_ENFORCER, Role } from './rbac';
-import { Enforcer } from 'casbin';
+// import { LoginUserDto } from '../dto/login-user.dto';
+import {
+  // AuthAction, CASBIN_ENFORCER,
+  Role,
+} from '../../../api2/user/rbac';
+// import { Enforcer } from 'casbin';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject(CASBIN_ENFORCER) private readonly enforcer: Enforcer,
+    // @Inject(CASBIN_ENFORCER) private readonly enforcer: Enforcer,
     @InjectRepository(User) private repo: Repository<User>,
     private usersService: UsersService,
-    private jwtService: JwtService,
+    // private jwtService: JwtService,
   ) {}
 
   // 註冊
@@ -41,44 +48,44 @@ export class AuthService {
   }
 
   // 登入
-  async login(userData: LoginUserDto) {
-    const { email, password } = userData;
-    const ExitUser = await this.usersService.findOne(email);
-    let token = '';
-    if (ExitUser) {
-      if (password) {
-        const { password: hashedPassword } = ExitUser;
-        // 確認輸入的密碼是否正確
-        const pass = await bcrypt.compare(password, hashedPassword);
-        if (pass) {
-          token = await this.jwtService.sign(
-            {
-              sub: ExitUser._id,
-              username: ExitUser.name,
-              role: ExitUser.role,
-            },
-            {
-              secret: process.env.JWT_SECRET,
-            },
-          );
-        }
-      }
-    }
-    return { token };
-  }
+  // async login(userData: LoginUserDto) {
+  //   const { email, password } = userData;
+  //   const ExitUser = await this.usersService.findOne(email);
+  //   let token = '';
+  //   if (ExitUser) {
+  //     if (password) {
+  //       const { password: hashedPassword } = ExitUser;
+  //       // 確認輸入的密碼是否正確
+  //       const pass = await bcrypt.compare(password, hashedPassword);
+  //       if (pass) {
+  //         token = await this.jwtService.sign(
+  //           {
+  //             sub: ExitUser._id,
+  //             username: ExitUser.name,
+  //             role: ExitUser.role,
+  //           },
+  //           {
+  //             secret: process.env.JWT_SECRET,
+  //           },
+  //         );
+  //       }
+  //     }
+  //   }
+  //   return { token };
+  // }
 
-  // 判斷是否有權限
-  checkPermission(sub: string, obj: string, act: AuthAction) {
-    return this.enforcer.enforce(sub, obj, act);
-  }
+  // // 判斷是否有權限
+  // checkPermission(sub: string, obj: string, act: AuthAction) {
+  //   return this.enforcer.enforce(sub, obj, act);
+  // }
 
-  mappingAction(method: string) {
-    const table: Record<string, AuthAction> = {
-      POST: AuthAction.CREATE,
-      GET: AuthAction.READ,
-      PATCH: AuthAction.UPDATE,
-      DELETE: AuthAction.DELETE,
-    };
-    return table[method.toUpperCase()] || AuthAction.READ;
-  }
+  // mappingAction(method: string) {
+  //   const table: Record<string, AuthAction> = {
+  //     POST: AuthAction.CREATE,
+  //     GET: AuthAction.READ,
+  //     PATCH: AuthAction.UPDATE,
+  //     DELETE: AuthAction.DELETE,
+  //   };
+  //   return table[method.toUpperCase()] || AuthAction.READ;
+  // }
 }

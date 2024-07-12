@@ -3,13 +3,13 @@
 // 如：facebook 驗證策略、google 驗證策略、本地驗證策略等，完美解決各種驗證機制的處理
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { UserService } from 'api2/user/user.service';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { UsersService } from '../users.service';
 
 // 處理 JWT 驗證策略
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private usersService: UsersService) {
+  constructor(private userService: UserService) {
     super({
       //这里调用了基类 super 的构造函数，并传递了一个配置对象。
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // jwtFromRequest 选项告诉 Passport 从请求的授权头中提取 JWT，这意味着 JWT 应该以 Bearer Token 的形式出现在请求头中。
@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   // 驗證token後才會觸發此函式
   async validate(payload: any) {
     const userId = payload.sub;
-    const user = await this.usersService.findOne(userId);
+    const user = await this.userService.findOne(null, userId);
     return user;
   }
 }

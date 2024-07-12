@@ -4,12 +4,12 @@ import {
   IsArray,
   IsEnum,
   MaxLength,
-  IsBoolean,
+  // IsBoolean,
   IsOptional,
-  IsDate,
+  // IsDate,
   MinLength,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+// import { Type } from 'class-transformer';
 import { Role } from '@data/enum/role.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -47,30 +47,30 @@ export class CreateUserDto {
   @MaxLength(5000)
   lecturerBio?: string;
 
-  @ApiProperty({ required: false })
-  @IsBoolean()
-  isFrozen: boolean;
+  // @ApiProperty({ required: false })
+  // @IsBoolean()
+  // isFrozen: boolean;
 
-  @ApiProperty({ required: false })
-  @IsBoolean()
-  isNotificationEnabled: boolean;
+  // @ApiProperty({ required: false })
+  // @IsBoolean()
+  // isNotificationEnabled: boolean;
 
-  @ApiProperty({ required: false })
-  @IsBoolean()
-  isPrivacyEnabled: boolean;
+  // @ApiProperty({ required: false })
+  // @IsBoolean()
+  // isPrivacyEnabled: boolean;
 
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  createdAt?: Date;
+  // @IsOptional()
+  // @IsDate()
+  // @Type(() => Date)
+  // createdAt?: Date;
 
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  updatedAt?: Date;
+  // @IsOptional()
+  // @IsDate()
+  // @Type(() => Date)
+  // updatedAt?: Date;
 
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  lastLoginTime?: Date;
+  // @IsOptional()
+  // @IsDate()
+  // @Type(() => Date)
+  // lastLoginTime?: Date;
 }
