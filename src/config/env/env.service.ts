@@ -218,9 +218,9 @@ export class EnvService {
    *  讀取 金流-商家資料類型
    */
   getRespondType(): string {
-    const respondType = this.configService.get<string>('REsPOND_TYPE');
+    const respondType = this.configService.get<string>('RESPOND_TYPE');
 
-    if (!respondType) throw new Error('在環境變量中找不到 REsPOND_TYPE 數據庫連接字符串');
+    if (!respondType) throw new Error('在環境變量中找不到 RESPOND_TYPE 數據庫連接字符串');
 
     return respondType;
   }

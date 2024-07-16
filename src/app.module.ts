@@ -7,9 +7,19 @@ import { RoleGuard } from '@api/users/auth/role.guard';
 import { ApiModule } from './api/api.module';
 import { Api2Module } from './api2/api2.module';
 import { ApplicationModule } from './application/application.module';
+import { ValidateUtilsModule } from './core/utils/validate-utils/validate-utils.module';
+import { CoreModule } from './core/core.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, ApiModule, Api2Module, ApplicationModule],
+  imports: [
+    ConfigModule,
+    DatabaseModule,
+    ApiModule,
+    Api2Module,
+    ApplicationModule,
+    ValidateUtilsModule,
+    CoreModule,
+  ],
   controllers: [AppController],
   providers: [AppService, ClassSerializerInterceptor, RoleGuard],
 })
