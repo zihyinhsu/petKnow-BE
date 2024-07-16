@@ -123,7 +123,7 @@ export class EnvService {
 
     if (!coverUrl) {
       // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
-      throw new Error('在環境變量中找不到 COVER_URL 數據庫連接字符串');
+      throw new Error('在環境變量中找不到 COVER_URL');
     }
 
     return coverUrl;
@@ -139,7 +139,7 @@ export class EnvService {
 
     if (!coverParamsUrl) {
       // 如果環境變數未定義且也沒有提供預設值，則引發錯誤
-      throw new Error('在環境變量中找不到 COVER_PARAMS_URL 數據庫連接字符串');
+      throw new Error('在環境變量中找不到 COVER_PARAMS_URL');
     }
 
     return coverParamsUrl;
