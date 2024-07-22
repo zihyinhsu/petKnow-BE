@@ -201,6 +201,8 @@ export class FakeInformationService {
     return couponCode;
   }
 
+  //#region getUserCourseCountGreaterThanOneAsync [ 讀取使用者開課數大於 1 ]
+  /** 讀取使用者開課數大於 1 */
   async getUserCourseCountGreaterThanOneAsync() {
     const result = await this.courseHierarchyModel.aggregate([
       {
@@ -252,7 +254,10 @@ export class FakeInformationService {
 
     return result;
   }
+  //#endregion getUserCourseCountGreaterThanOneAsync [ 讀取使用者開課數大於 1 ]
 
+  //#region createCourseHierarchys [ 新增一筆課程彙總資料 ]
+  /** 新增一筆課程彙總資料 */
   async createCourseHierarchys(createCourseHierarchysDto: CreateCourseHierarchysDto) {
     const { user } = createCourseHierarchysDto;
 
@@ -268,7 +273,10 @@ export class FakeInformationService {
 
     return newCourseHierarchy._id.toString();
   }
+  //#endregion createCourseHierarchys [ 新增一筆課程彙總資料 ]
 
+  //#region courseHierarchyManyData [ 產生假資料 - 課程彙總資料 ]
+  /** 產生假資料 - 課程彙總資料 */
   async courseHierarchyManyData() {
     const {
       dogCovers,
@@ -310,7 +318,10 @@ export class FakeInformationService {
 
     return HttpMessage.CreateSuccess;
   }
+  //#endregion courseHierarchyManyData [ 產生假資料 - 課程彙總資料 ]
 
+  //#region couponManyData [ 產生假資料 - 平台優惠碼資料 ]
+  /** 產生假資料 - 平台優惠碼資料 */
   async couponManyData(createCouponManyDto: CreateCouponManyDto) {
     const { quantity } = createCouponManyDto;
     const newData: IPlatformCoupon[] = [];
@@ -358,7 +369,10 @@ export class FakeInformationService {
 
     return HttpMessage.CreateFailure;
   }
+  //#endregion couponManyData [ 產生假資料 - 平台優惠碼資料 ]
 
+  //#region courseTagManyData [ 產生假資料 - 標籤資料 ]
+  /** 產生假資料 - 標籤資料 */
   async courseTagManyData() {
     const newData: ICourseTag[] = [];
 
@@ -379,7 +393,10 @@ export class FakeInformationService {
 
     return true;
   }
+  //#endregion courseTagManyData [ 產生假資料 - 標籤資料 ]
 
+  //#region userManyData [ 產生假資料 - 使用者資料 ]
+  /** 產生假資料 - 使用者資料 */
   async userManyData() {
     const newData: IUser[] = [];
 
@@ -416,4 +433,5 @@ export class FakeInformationService {
 
     return true;
   }
+  //#endregion userManyData [ 產生假資料 - 使用者資料 ]
 }

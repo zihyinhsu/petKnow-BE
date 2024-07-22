@@ -18,6 +18,8 @@ import { CouponService } from './coupon.service';
 import { couponDto } from './dto/coupon.dto';
 import { Coupon } from './dto/coupon.entity';
 
+// TODO: 使用者權限需測試
+
 @ApiTags('優惠券')
 @Controller('coupon')
 @UseGuards(AuthGuard('jwt'), RoleGuard)
