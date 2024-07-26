@@ -3,8 +3,9 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 import { HomeService } from './home.service';
 import { HomeSearchDto } from './input/home-search.dto';
 import { ValidateObjectIdPipe } from 'core/pipes/validate.pipe';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('基本頁面')
 @Controller('home')
 export class HomeController {
   constructor(private readonly homeService: HomeService) {}

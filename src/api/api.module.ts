@@ -14,6 +14,7 @@ import { CourseTagModule } from './course-tag/course-tag.module';
 import { GoldFlowModule } from './gold-flow/gold-flow.module';
 // import { AuthModule } from 'api2/user/user.module';
 import { HomeModule } from './home/home.module';
+import { PlatformCouponsModule } from './platform-coupons/platform-coupons.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { HomeModule } from './home/home.module';
     CourseTagModule,
     GoldFlowModule,
     HomeModule,
+    PlatformCouponsModule,
   ],
   controllers: [],
   providers: [],

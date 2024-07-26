@@ -8,13 +8,13 @@ import { Document } from 'mongoose';
 interface IPlatformCoupon {
   // UPDATE: 未完層項目，未來改成讀取 courseTags 資料表
   /** 標籤名稱 */
-  tagNames: string[];
+  tagNames?: string[];
   /** 優惠卷代碼 */
   couponCode: string;
   /** 優惠價格 */
   price: number;
   /** 是否啟用 */
-  isEnabled: boolean;
+  isEnabled?: boolean;
   /** 開始日期 */
   startDate: Date;
   /** 結束日期 */
@@ -45,7 +45,7 @@ class PlatformCoupon extends Document implements IPlatformCoupon {
   price: number;
 
   /** 是否啟用 */
-  @Prop({ type: Boolean, required: true, default: false })
+  @Prop({ type: Boolean, default: false })
   isEnabled: boolean;
 
   /** 開始日期 */

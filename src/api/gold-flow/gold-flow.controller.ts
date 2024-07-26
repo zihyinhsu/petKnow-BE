@@ -8,10 +8,11 @@ import { HttpMessage } from '@config/enums/http.enum';
 import { GoldFlowCouponDto } from './input/gold-flow-coupon.dto';
 import { GoldFlowVisitorsCartDto } from './input/gold-flow-visitors-cart.dto';
 import { GoldFlowCheckOrderDto } from './input/gold-flow-check-order.dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 // TODO: 使用者權限需測試
 
+@ApiTags('金流 / 購物車 功能')
 @Controller('gold-flow')
 export class GoldFlowController {
   constructor(

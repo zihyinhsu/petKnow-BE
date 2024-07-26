@@ -20,7 +20,7 @@ export class HomeSearchCoursesDto {
   @IsArray()
   courses: Course[];
 
-  @ApiProperty({ description: '標籤名稱' })
+  @ApiProperty({ description: '標籤名稱', example: ['貓咪食譜', '狗狗訓練'] })
   @IsArray()
   uniqueTagNames?: string[];
 }
