@@ -13,6 +13,7 @@ import { FakeInformationModule } from './fake-information/fake-information.modul
 import { CourseTagModule } from './course-tag/course-tag.module';
 import { GoldFlowModule } from './gold-flow/gold-flow.module';
 // import { AuthModule } from 'api2/user/user.module';
+import { HomeModule } from './home/home.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { GoldFlowModule } from './gold-flow/gold-flow.module';
     FakeInformationModule,
     CourseTagModule,
     GoldFlowModule,
+    HomeModule,
   ],
   controllers: [],
   providers: [],
