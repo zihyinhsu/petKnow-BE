@@ -12,7 +12,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 // TODO: 使用者權限需測試
 
-@ApiTags('金流 / 購物車 功能')
+@ApiTags('金流功能')
 @Controller('gold-flow')
 export class GoldFlowController {
   constructor(

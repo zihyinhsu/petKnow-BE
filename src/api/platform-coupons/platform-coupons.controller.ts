@@ -6,13 +6,12 @@ import { ValidateObjectIdPipe } from 'core/pipes/validate.pipe';
 import { UpdatePlatformCouponDTO } from './input/update-platform-coupon.dto';
 
 @ApiTags('優惠資料表')
-@Controller('platformCoupons')
+@Controller('platform-coupons')
 export class PlatformCouponsController {
   constructor(private readonly platformCouponsService: PlatformCouponsService) {}
 
   @ApiOperation({
     summary: '優惠卷資料表 - 查詢所有資料',
-    description: '根據傳入的名稱參數，查詢並傳回包含該名稱的優惠卷名稱。最多回傳100條結果。 ',
   })
   @Get()
   async getAll() {
